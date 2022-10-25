@@ -1,31 +1,40 @@
 package com.example.digitkraftbackend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
+import org.hibernate.Hibernate;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotNull
-    private Long code;
+    private String name;
 
-    @NotNull
-    private Boolean available;
+    private String description;
 
-    @ManyToOne
-    @JoinColumn(name="product_type_id")
-    @NotNull
-    private ProductType productType;
+    private Double price;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Product product = (Product) o;
+        return id != null && Objects.equals(id, product.id);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

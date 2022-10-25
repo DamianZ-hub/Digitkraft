@@ -12,8 +12,8 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Table(name = "role")
-public class Role {
+@Table(name = "category")
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,12 +21,18 @@ public class Role {
 
     private String name;
 
+    private String description;
+
+    @ManyToOne
+    @JoinColumn(name="parent_category_id")
+    private Category parentCategory;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Role role = (Role) o;
-        return id != null && Objects.equals(id, role.id);
+        Category product = (Category) o;
+        return id != null && Objects.equals(id, product.id);
     }
 
     @Override

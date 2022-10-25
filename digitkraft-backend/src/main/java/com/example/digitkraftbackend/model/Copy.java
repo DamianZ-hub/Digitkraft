@@ -12,21 +12,32 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Table(name = "role")
-public class Role {
+@Table(name = "copy")
+public class Copy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String name;
+    @Column(unique = true)
+    private String code;
+
+    private Boolean available;
+
+    @ManyToOne
+    @JoinColumn(name="product_id")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name="order_id")
+    private Order order;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Role role = (Role) o;
-        return id != null && Objects.equals(id, role.id);
+        Copy copy = (Copy) o;
+        return id != null && Objects.equals(id, copy.id);
     }
 
     @Override
