@@ -1,18 +1,16 @@
 package com.example.digitkraftbackend.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Table(name = "category")
+@Entity
+@Table(name = "categories")
 public class Category {
 
     @Id
@@ -24,19 +22,29 @@ public class Category {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name="parent_category_id")
+    @JoinColumn(name = "parent_category_id")
     private Category parentCategory;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", parentCategory=" + parentCategory +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Category product = (Category) o;
-        return id != null && Objects.equals(id, product.id);
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return Objects.equals(id, category.id) && Objects.equals(name, category.name) && Objects.equals(description, category.description) && Objects.equals(parentCategory, category.parentCategory);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, name, description, parentCategory);
     }
 }

@@ -1,42 +1,53 @@
 package com.example.digitkraftbackend.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
+
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Table(name = "characteristic")
+@Entity
+@Table(name = "characteristics")
 public class Characteristic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String charName;
+    @Column(name = "char_name")
+    private String name;
 
-    private String charValue;
+    @Column(name = "char_value")
+    private String value;
 
     @ManyToOne
-    @JoinColumn(name="product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
+
+    @Override
+    public String toString() {
+        return "Characteristic{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                ", product=" + product +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Characteristic that = (Characteristic) o;
-        return id != null && Objects.equals(id, that.id);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(value, that.value) && Objects.equals(product, that.product);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, name, value, product);
     }
 }

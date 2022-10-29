@@ -1,18 +1,16 @@
 package com.example.digitkraftbackend.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Table(name = "address")
+@Entity
+@Table(name = "addresses")
 public class Address {
 
     @Id
@@ -34,15 +32,29 @@ public class Address {
     private String apartment;
 
     @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", country='" + country + '\'' +
+                ", region='" + region + '\'' +
+                ", city='" + city + '\'' +
+                ", postCode='" + postCode + '\'' +
+                ", street='" + street + '\'' +
+                ", house='" + house + '\'' +
+                ", apartment='" + apartment + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return id != null && Objects.equals(id, address.id);
+        return Objects.equals(id, address.id) && Objects.equals(country, address.country) && Objects.equals(region, address.region) && Objects.equals(city, address.city) && Objects.equals(postCode, address.postCode) && Objects.equals(street, address.street) && Objects.equals(house, address.house) && Objects.equals(apartment, address.apartment);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, country, region, city, postCode, street, house, apartment);
     }
 }
