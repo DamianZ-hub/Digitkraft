@@ -6,7 +6,7 @@ public enum PaymentMethod {
 
     private String code;
 
-    private PaymentMethod(String code) {
+    PaymentMethod(String code) {
         this.code = code;
     }
 

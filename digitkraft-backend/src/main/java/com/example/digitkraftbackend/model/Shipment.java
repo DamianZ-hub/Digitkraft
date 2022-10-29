@@ -1,18 +1,16 @@
 package com.example.digitkraftbackend.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Table(name = "shipment")
+@Entity
+@Table(name = "shipments")
 public class Shipment {
 
     @Id
@@ -24,15 +22,24 @@ public class Shipment {
     private Double price;
 
     @Override
+    public String toString() {
+        return "Shipment{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Shipment product = (Shipment) o;
-        return id != null && Objects.equals(id, product.id);
+        if (o == null || getClass() != o.getClass()) return false;
+        Shipment shipment = (Shipment) o;
+        return Objects.equals(id, shipment.id) && Objects.equals(name, shipment.name) && Objects.equals(price, shipment.price);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, name, price);
     }
 }

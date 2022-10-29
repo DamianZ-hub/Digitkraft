@@ -5,7 +5,7 @@ public enum OrderStatus {
 
     private String code;
 
-    private OrderStatus(String code) {
+    OrderStatus(String code) {
         this.code = code;
     }
 

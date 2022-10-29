@@ -1,18 +1,16 @@
 package com.example.digitkraftbackend.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Table(name = "copy")
+@Entity
+@Table(name = "copies")
 public class Copy {
 
     @Id
@@ -25,23 +23,34 @@ public class Copy {
     private Boolean available;
 
     @ManyToOne
-    @JoinColumn(name="product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name="order_id")
+    @JoinColumn(name = "order_id")
     private Order order;
+
+    @Override
+    public String toString() {
+        return "Copy{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", available=" + available +
+                ", product=" + product +
+                ", order=" + order +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Copy copy = (Copy) o;
-        return id != null && Objects.equals(id, copy.id);
+        return Objects.equals(id, copy.id) && Objects.equals(code, copy.code) && Objects.equals(available, copy.available) && Objects.equals(product, copy.product) && Objects.equals(order, copy.order);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, code, available, product, order);
     }
 }
