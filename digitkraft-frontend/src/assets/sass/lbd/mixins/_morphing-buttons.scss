@@ -1,4 +1,4 @@
-$prefixes: ('', '-moz-', '-webkit-', '-ms-') !***REMOVED***;
+$prefixes: ('', '-moz-', '-webkit-', '-ms-') !default;
 
 @mixin circle-animation(){
    @for $i from 0 to length($prefixes) {

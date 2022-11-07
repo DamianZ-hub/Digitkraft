@@ -120,7 +120,7 @@
 }
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
     background-color: $smoke-bg;
-    color: $***REMOVED***-color;
+    color: $default-color;
     cursor: not-allowed;
 }
 
@@ -128,7 +128,7 @@
     border-width: $border-thin;
     padding: $padding-round-vertical $padding-base-horizontal;
 }
-.input-group-btn .btn-***REMOVED***:not(.btn-fill){
+.input-group-btn .btn-default:not(.btn-fill){
     border-color: $medium-gray;
 }
 
