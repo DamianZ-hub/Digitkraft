@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminLayoutComponent } from './***REMOVED***-layout.component';
+import { AdminLayoutComponent } from './admin-layout.component';
 
 describe('AdminLayoutComponent', () => {
   let component: AdminLayoutComponent;

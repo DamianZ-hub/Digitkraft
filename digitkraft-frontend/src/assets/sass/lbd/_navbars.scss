@@ -131,20 +131,20 @@
         }
     }
 
-    .btn-***REMOVED***{
+    .btn-default{
         color: $white-color;
         border-color: $white-color;
     }
-    .btn-***REMOVED***.btn-fill{
+    .btn-default.btn-fill{
         color: $dark-gray;
         background-color: $white-color;
         @include opacity(.9);
     }
-    .btn-***REMOVED***.btn-fill:hover,
-    .btn-***REMOVED***.btn-fill:focus,
-    .btn-***REMOVED***.btn-fill:active,
-    .btn-***REMOVED***.btn-fill.active,
-    .open .dropdown-toggle.btn-fill.btn-***REMOVED***{
+    .btn-default.btn-fill:hover,
+    .btn-default.btn-fill:focus,
+    .btn-default.btn-fill:active,
+    .btn-default.btn-fill.active,
+    .open .dropdown-toggle.btn-fill.btn-default{
         border-color: $white-color;
         @include opacity(1);
     }
@@ -161,7 +161,7 @@
     border-top-color: $white-color;
 }
 
-.navbar-***REMOVED*** {
+.navbar-default {
     background-color: $white-navbar;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
@@ -201,7 +201,7 @@
 
     }
 
-    &:not(.navbar-transparent) .btn-***REMOVED***:hover{
+    &:not(.navbar-transparent) .btn-default:hover{
         color: $info-color;
         border-color: $info-color;
     }
@@ -289,8 +289,8 @@
         border-color: transparent;
     }
 
-    &.navbar-***REMOVED*** .navbar-toggle:hover,
-    &.navbar-***REMOVED*** .navbar-toggle:focus {
+    &.navbar-default .navbar-toggle:hover,
+    &.navbar-default .navbar-toggle:focus {
         background-color: transparent;
     }
 }

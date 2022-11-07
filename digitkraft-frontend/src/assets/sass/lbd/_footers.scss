@@ -14,7 +14,7 @@
             margin-bottom: 3px;
             &:hover,
             &:focus{
-                color: $***REMOVED***-states-color;
+                color: $default-states-color;
             }
         }
     }
@@ -35,11 +35,11 @@
        text-align: center;
        &:hover,
        &:focus{
-           color: $***REMOVED***-states-color;
+           color: $default-states-color;
        }
     }
     .copyright{
-        color: $***REMOVED***-states-color;
+        color: $default-states-color;
         padding: 10px 15px;
         margin: 10px 3px;
         line-height: 20px;
@@ -49,11 +49,11 @@
         border-color: $medium-gray;
     }
     .title{
-        color: $***REMOVED***-states-color;
+        color: $default-states-color;
     }
 }
 
-.footer-***REMOVED***{
+.footer-default{
     background-color: $smoke-bg;
 }
 

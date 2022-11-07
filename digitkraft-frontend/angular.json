@@ -80,7 +80,7 @@
             "development": {
               "browserTarget": "lbd-free-angular-cli:build:development"
             },
-            "***REMOVED***Configuration": "development"
+            "defaultConfiguration": "development"
           }
         },
         "extract-i18n": {
@@ -149,7 +149,7 @@
       }
     }
   },
-  "***REMOVED***Project": "lbd-free-angular-cli",
+  "defaultProject": "lbd-free-angular-cli",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

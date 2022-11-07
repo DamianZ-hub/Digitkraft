@@ -273,11 +273,11 @@
 .has-switch.deactivate {
   opacity: 0.5;
   filter: alpha(opacity=50);
-  cursor: ***REMOVED*** !important;
+  cursor: default !important;
 }
 .has-switch.deactivate label,
 .has-switch.deactivate span {
-  cursor: ***REMOVED*** !important;
+  cursor: default !important;
 }
 .has-switch > div {
    position: relative;
