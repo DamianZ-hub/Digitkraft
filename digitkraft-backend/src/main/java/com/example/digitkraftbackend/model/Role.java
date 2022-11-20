@@ -1,5 +1,6 @@
 package com.example.digitkraftbackend.model;
 
+import com.example.digitkraftbackend.constant.RoleType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,13 +18,14 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private RoleType name;
 
     @Override
     public String toString() {
         return "Role{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name=" + name +
                 '}';
     }
 
@@ -32,7 +34,7 @@ public class Role {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role = (Role) o;
-        return Objects.equals(id, role.id) && Objects.equals(name, role.name);
+        return Objects.equals(id, role.id) && name == role.name;
     }
 
     @Override

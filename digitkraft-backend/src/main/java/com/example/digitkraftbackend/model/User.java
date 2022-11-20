@@ -27,11 +27,11 @@ public class User {
 
     private boolean enabled;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="contact_info_id")
     private ContactInfo contactInfo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="address_id")
     private Address address;
 
