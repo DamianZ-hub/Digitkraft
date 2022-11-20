@@ -1,9 +1,10 @@
 $logo-text-outline-color: #e3e3e3;
 $logo-background-color: #7e92db;
 
+.register-container,
 .login-container {
   position: absolute;
-  top: 20%;
+  top: 10%;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -17,6 +18,7 @@ $logo-background-color: #7e92db;
   padding: 7rem 5rem;
 }
 
+.register-text,
 .login-text {
   background-color: $logo-background-color;
   padding: 1rem;
