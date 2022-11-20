@@ -1,21 +1,20 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { LbdModule } from '../../lbd/lbd.module';
-import { NguiMapModule} from '@ngui/map';
+import { LbdModule } from "../../lbd/lbd.module";
+import { NguiMapModule } from "@ngui/map";
 
-import { AdminLayoutRoutes } from './admin-layout.routing';
+import { AdminLayoutRoutes } from "./admin-layout.routing";
 
-import { HomeComponent } from '../../home/home.component';
-import { UserComponent } from '../../user/user.component';
-import { TablesComponent } from '../../tables/tables.component';
-import { TypographyComponent } from '../../typography/typography.component';
-import { IconsComponent } from '../../icons/icons.component';
-import { MapsComponent } from '../../maps/maps.component';
-import { NotificationsComponent } from '../../notifications/notifications.component';
-
+import { HomeComponent } from "../../home/home.component";
+import { UserComponent } from "../../user/user.component";
+import { TablesComponent } from "../../tables/tables.component";
+import { TypographyComponent } from "../../typography/typography.component";
+import { IconsComponent } from "../../icons/icons.component";
+import { MapsComponent } from "../../maps/maps.component";
+import { NotificationsComponent } from "../../notifications/notifications.component";
 
 @NgModule({
   imports: [
@@ -23,7 +22,10 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     LbdModule,
-    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE'})
+    NguiMapModule.forRoot({
+      apiUrl: "https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE",
+    }),
+    ReactiveFormsModule,
   ],
   declarations: [
     HomeComponent,
@@ -33,7 +35,6 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
-  ]
+  ],
 })
-
 export class AdminLayoutModule {}

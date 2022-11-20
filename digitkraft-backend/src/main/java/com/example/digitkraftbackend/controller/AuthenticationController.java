@@ -9,10 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -31,6 +28,7 @@ public class AuthenticationController {
         this.sessionRegistry = sessionRegistry;
     }
 
+    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<SessionDTO> login(@RequestBody @Valid LoginUserDTO user) {
         authenticationManager.authenticate(
@@ -40,6 +38,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(new SessionDTO(sessionRegistry.registerSession(user.getUsername())));
     }
 
+    @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid RegisterUserDTO user) {
         userAuthenticationService.registerUser(user);

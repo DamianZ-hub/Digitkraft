@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
@@ -15,29 +15,16 @@ export class RestClientService {
   constructor(private readonly httpClient: HttpClient) {}
 
   register(data: IRegisterUserDTO): Observable<string> {
-    return this.httpClient.post<string>(this.getUrl("register"), data);
+    return this.httpClient.post<string>(
+      this.getUrl("authentication/register"),
+      data
+    );
   }
 
   login(data: ILoginUserDTO): Observable<ISessionDTO> {
-    return this.httpClient.post<ISessionDTO>(this.getUrl("login"), data);
+    return this.httpClient.post<ISessionDTO>(
+      this.getUrl("authentication/login"),
+      data
+    );
   }
-
-  exampleGet(): Observable<IExampleEntry> {
-    return this.httpClient.get<IExampleEntry>(this.getUrl("entries"));
-  }
-}
-
-interface IExampleEntry {
-  count: number;
-  entries: Array<IEntry>;
-}
-
-interface IEntry {
-  api: string;
-  description: string;
-  auth: string;
-  https: boolean;
-  cors: string;
-  link: string;
-  category: string;
 }

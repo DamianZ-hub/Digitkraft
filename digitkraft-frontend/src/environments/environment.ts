@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "https://api.publicapis.org",
+  apiBaseUrl: "http://localhost:8080",
 };

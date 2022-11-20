@@ -2,34 +2,64 @@
   <span class="login-text">DigitKraft</span>
   <div>
     <div class="card">
-      <div class="card-content">
+      <form class="card-content" [formGroup]="loginForm" (ngSubmit)="login()">
         <div class="input-field">
           <label>USERNAME</label>
-          <input type="text" class="form-control" placeholder="Login" />
+          <input
+            formControlName="username"
+            type="text"
+            class="form-control"
+            placeholder="Username"
+          />
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              loginForm.controls.username.touched &&
+              loginForm.controls.username.errors?.required
+            "
+          >
+            Username is required
+          </small>
         </div>
 
         <div class="input-field">
           <label>PASSWORD</label>
-          <input type="password" class="form-control" placeholder="Password" />
+          <input
+            formControlName="password"
+            type="password"
+            class="form-control"
+            placeholder="Password"
+          />
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              loginForm.controls.password.touched &&
+              loginForm.controls.password.errors?.required
+            "
+          >
+            Password is required
+          </small>
         </div>
 
-        <div class="button-container">
+        <div class="button-container" style="flex-direction: row-reverse">
           <button
-            (click)="goToRegister()"
             type="submit"
             class="btn btn-info btn-fill"
-          >
-            Register
-          </button>
-          <button
-            (click)="getExampleData()"
-            type="submit"
-            class="btn btn-info btn-fill"
+            [disabled]="!this.canSubmit()"
           >
             Login
           </button>
+          <button (click)="goToRegister()" class="btn btn-info btn-fill">
+            Register
+          </button>
         </div>
-      </div>
+      </form>
     </div>
+    <footer class="disclaimer">
+      Under no circumstance shall we have any liability to you for any loss or
+      damage of any kind incurred as a result of the use of the site or reliance
+      on any information provided on the site. Your use of the site and your
+      reliance on any information on the site is solely at your own risk.
+    </footer>
   </div>
 </div>

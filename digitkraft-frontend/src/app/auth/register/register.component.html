@@ -2,31 +2,166 @@
   <span class="register-text">DigitKraft</span>
   <div>
     <div class="card">
-      <div class="card-content">
+      <form
+        class="card-content"
+        [formGroup]="registerForm"
+        (ngSubmit)="register()"
+      >
         <div class="input-field">
           <label>USERNAME</label>
-          <input type="text" class="form-control" placeholder="Login" />
+          <input
+            formControlName="username"
+            type="text"
+            class="form-control"
+            placeholder="Username"
+          />
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              registerForm.controls.username.touched &&
+              registerForm.controls.username.errors?.required
+            "
+          >
+            Username is required
+          </small>
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              registerForm.controls.username.touched &&
+              registerForm.controls.username.errors?.maxlength
+            "
+          >
+            Username is too long
+          </small>
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              registerForm.controls.username.touched &&
+              registerForm.controls.username.errors?.minlength
+            "
+          >
+            Username is too short
+          </small>
         </div>
 
         <div class="input-field">
           <label>PASSWORD</label>
-          <input type="password" class="form-control" placeholder="Password" />
+          <input
+            formControlName="password"
+            type="password"
+            class="form-control"
+            placeholder="Password"
+          />
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              registerForm.controls.password.touched &&
+              registerForm.controls.password.errors?.required
+            "
+          >
+            Password is required
+          </small>
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              registerForm.controls.password.touched &&
+              registerForm.controls.password.errors?.maxlength
+            "
+          >
+            Password is too long
+          </small>
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              registerForm.controls.password.touched &&
+              registerForm.controls.password.errors?.minlength
+            "
+          >
+            Password is too short
+          </small>
         </div>
 
         <div class="input-field">
           <label>REPEAT PASSWORD</label>
-          <input type="password" class="form-control" placeholder="Password" />
+          <input
+            formControlName="repeatPassword"
+            type="password"
+            class="form-control"
+            placeholder="Password"
+          />
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              registerForm.controls.repeatPassword.touched &&
+              registerForm.controls.repeatPassword.errors?.isNotMatching
+            "
+          >
+            Passwords does not match
+          </small>
         </div>
 
         <div class="input-field">
           <label>EMAIL</label>
-          <input type="text" class="form-control" placeholder="Email" />
+          <input
+            formControlName="email"
+            type="text"
+            class="form-control"
+            placeholder="Email"
+          />
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              registerForm.controls.email.touched &&
+              registerForm.controls.email.errors?.email
+            "
+          >
+            Email is not valid
+          </small>
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              registerForm.controls.email.touched &&
+              registerForm.controls.email.errors?.maxlength
+            "
+          >
+            Email is too long
+          </small>
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              registerForm.controls.email.touched &&
+              registerForm.controls.email.errors?.minlength
+            "
+          >
+            Email is too short
+          </small>
+          <small
+            class="text-danger validation-message"
+            *ngIf="
+              registerForm.controls.email.touched &&
+              registerForm.controls.email.errors?.required
+            "
+          >
+            Email is required
+          </small>
         </div>
 
         <div class="button-container">
-          <button type="submit" class="btn btn-info btn-fill">Register</button>
+          <button
+            type="submit"
+            class="btn btn-info btn-fill"
+            [disabled]="!canSubmit()"
+          >
+            Register
+          </button>
         </div>
-      </div>
+      </form>
     </div>
+    <footer class="disclaimer">
+      Under no circumstance shall we have any liability to you for any loss or
+      damage of any kind incurred as a result of the use of the site or reliance
+      on any information provided on the site. Your use of the site and your
+      reliance on any information on the site is solely at your own risk.
+    </footer>
   </div>
 </div>
