@@ -1,12 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { CartService } from "app/shared/services/cart.service";
-import { IProductListItemDto } from "app/shared/services/rest-client-dtos/IProductListItemDto";
+import { IProductDto } from "app/shared/services/rest-client-dtos/IProductDto";
+import { ISearchBodyDto } from "app/shared/services/rest-client-dtos/ISearchBodyDto";
 import { RestClientService } from "app/shared/services/rest-client.service";
+import { environment } from "environments/environment";
 import {
   BehaviorSubject,
   combineLatest,
   debounceTime,
   distinctUntilChanged,
+  map,
   Observable,
   switchMap,
   tap,
@@ -19,12 +22,13 @@ import {
 })
 export class ProductListComponent implements OnInit {
   private readonly typingDebounceTimeout = 600;
+  private readonly categoryAll = "";
+  categories: Array<ICategoryData> = [];
 
   loading = false;
-  CATEGORIES = ["vtuber", "wire"];
 
-  filteredProducts$: Observable<Array<IProductListItemDto>>;
-  categorySubject = new BehaviorSubject(this.CATEGORIES[0]);
+  filteredProducts$: Observable<Array<IProductDto>>;
+  categorySubject = new BehaviorSubject(this.categoryAll);
   fromPriceSubject = new BehaviorSubject(0);
   toPriceSubject = new BehaviorSubject(1000);
   searchSubject = new BehaviorSubject("");
@@ -35,6 +39,7 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getCategories();
     this.filteredProducts$ = combineLatest([
       this.categorySubject,
       this.fromPriceSubject,
@@ -44,18 +49,48 @@ export class ProductListComponent implements OnInit {
       debounceTime(this.typingDebounceTimeout),
       distinctUntilChanged(),
       tap(() => (this.loading = true)),
-      switchMap((requestBody) => this.client.getProductList(requestBody[3])),
+      map(([categoryFilter, fromPriceFilter, toPriceFilter, searchFilter]) => {
+        return {
+          category: categoryFilter,
+          minPrice: fromPriceFilter,
+          maxPrice: toPriceFilter,
+          name: searchFilter,
+        } as ISearchBodyDto;
+      }),
+      switchMap((requestBody) => this.client.getProductSearch(requestBody)),
       tap(() => (this.loading = false))
     );
   }
 
-  addProductToCart(product: IProductListItemDto): void {
-    const productId = product.productId;
-
-    if (this.cart.checkIfAlreadyExists(productId)) {
-      this.cart.removeProduct(productId);
+  addProductToCart(product: IProductDto): void {
+    if (this.cart.checkIfAlreadyExists(product)) {
+      this.cart.removeProduct(product);
     } else {
       this.cart.addProduct(product);
     }
   }
+
+  getCategories() {
+    const categoryAll = {
+      name: "All",
+      value: this.categoryAll,
+    } as ICategoryData;
+
+    this.client.getCategories().subscribe((data) => {
+      const mappedCategories = data.map((item) => {
+        return { name: item.name, value: item.name } as ICategoryData;
+      });
+
+      this.categories = [categoryAll, ...mappedCategories];
+    });
+  }
+
+  getImageFullPath(path: string): string {
+    return `${environment.apiBaseUrl}/${path}`;
+  }
+}
+
+interface ICategoryData {
+  name: string;
+  value: string;
 }

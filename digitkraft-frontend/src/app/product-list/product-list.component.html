@@ -14,10 +14,10 @@
               (ngModelChange)="categorySubject.next($event)"
             >
               <option
-                *ngFor="let categoryName of CATEGORIES"
-                value="{{ categoryName }}"
+                *ngFor="let category of categories"
+                value="{{ category.value }}"
               >
-                {{ categoryName }}
+                {{ category.name }}
               </option>
             </select>
           </div>
@@ -75,7 +75,8 @@
                 <div class="card">
                   <img
                     class="card-img-top"
-                    src="{{ product.pictureUrl }}"
+                    src="{{ getImageFullPath(product.productImages[0]) }}"
+                    onerror="this.src = 'assets/img/not_found_picture.png'"
                     alt="Product picture"
                   />
                   <div class="card-body">
@@ -84,7 +85,7 @@
                       <span> {{ product.price | currency }} </span>
                     </div>
                     <p class="card-text">
-                      {{ product.shortDescription }}
+                      {{ product.description }}
                     </p>
                     <div class="item-button-container">
                       <a class="btn btn-default btn-round"

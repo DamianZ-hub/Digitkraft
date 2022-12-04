@@ -15,8 +15,8 @@ import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.compon
 import { LoginComponent } from "./auth/login/login.component";
 import { RegisterComponent } from "./auth/register/register.component";
 import { HttpErrorNotificationInterceptor } from "./interceptors/http-error-notification.interceptor";
-import { CanActivateBasic } from "./auth/can-activate-basic";
-import { ProductListComponent } from './product-list/product-list.component';
+import { ProductListComponent } from "./product-list/product-list.component";
+import { AuthInterceptor } from "./interceptors/auth.interceptor";
 
 @NgModule({
   imports: [
@@ -38,9 +38,14 @@ import { ProductListComponent } from './product-list/product-list.component';
     ProductListComponent,
   ],
   providers: [
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: HttpErrorNotificationInterceptor,
+    //   multi: true,
+    // },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorNotificationInterceptor,
+      useClass: AuthInterceptor,
       multi: true,
     },
   ],

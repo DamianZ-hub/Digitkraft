@@ -5,7 +5,7 @@ import {
   NotificationTypes,
   NotificationVerticalPosition,
 } from "./notification-service.service";
-import { IProductListItemDto } from "./rest-client-dtos/IProductListItemDto";
+import { IProductDto } from "./rest-client-dtos/IProductDto";
 
 @Injectable({
   providedIn: "root",
@@ -21,13 +21,12 @@ export class CartService {
     (JSON.parse(localStorage.getItem(this.localStorageKey)) ||
       []) as Array<ICartItem>;
 
-  addProduct(product: IProductListItemDto): void {
+  addProduct(product: IProductDto): void {
     const currentCart = this.getCurrentCart();
     currentCart.push({
       name: product.name,
-      pictureUrl: product.pictureUrl,
+      pictureUrl: product.productImages[0].path, // xd
       price: product.price,
-      productId: product.productId,
     } as ICartItem);
     this.setCurrentCart(currentCart);
 
@@ -39,10 +38,11 @@ export class CartService {
     );
   }
 
-  removeProduct(productId: number): void {
+  removeProduct(product: IProductDto): void {
+    const productName = product.name;
     const currentCart = this.getCurrentCart();
     const newCart = currentCart.filter(
-      (product) => product.productId !== productId
+      (product) => product.name !== productName
     );
     this.setCurrentCart(newCart);
 
@@ -54,10 +54,11 @@ export class CartService {
     );
   }
 
-  checkIfAlreadyExists(productId: number): boolean {
+  checkIfAlreadyExists(product: IProductDto): boolean {
+    const productName = product.name;
     const currentCart = this.getCurrentCart();
 
-    return !!currentCart.find((product) => product.productId === productId);
+    return !!currentCart.find((product) => product.name === productName);
   }
 
   clearCart(): void {
