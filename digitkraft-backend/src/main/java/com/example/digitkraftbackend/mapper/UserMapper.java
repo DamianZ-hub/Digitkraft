@@ -6,7 +6,7 @@ import com.example.digitkraftbackend.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring",uses = {AddressMapper.class, ContactInfoDTO.class})
+@Mapper(componentModel = "spring",uses = {AddressMapper.class, ContactInfoDTO.class, UserImageMapper.class})
 public interface UserMapper {
 
     @Mapping(source = "email", target = "contactInfo.email")

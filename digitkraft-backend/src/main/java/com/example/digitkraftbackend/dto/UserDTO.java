@@ -2,9 +2,10 @@ package com.example.digitkraftbackend.dto;
 
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 public class UserDTO {
-
     private String username;
     private String firstname;
     private String lastname;
@@ -12,4 +13,5 @@ public class UserDTO {
     private boolean enabled;
     private ContactInfoDTO contactInfo;
     private AddressDTO address;
+    private Set<UserImageDTO> productImages;
 }

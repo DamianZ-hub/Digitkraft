@@ -23,15 +23,15 @@ CREATE TABLE characteristics
 CREATE TABLE contact_infos
 (
     id         INTEGER NOT NULL,
-    tel_number VARCHAR(255),
-    email      VARCHAR(255),
+    tel_number VARCHAR(255) UNIQUE,
+    email      VARCHAR(255) UNIQUE,
     CONSTRAINT pk_contact_infos PRIMARY KEY (id)
 );
 
 CREATE TABLE copies
 (
     id         INTEGER NOT NULL,
-    code       VARCHAR(255),
+    code       VARCHAR(255) UNIQUE,
     available  BOOLEAN,
     product_id INTEGER,
     order_id   INTEGER,
@@ -47,7 +47,7 @@ CREATE TABLE orders
     user_id          INTEGER,
     contact_info_id  INTEGER,
     address_id       INTEGER,
-    code             VARCHAR(255),
+    code             VARCHAR(255) UNIQUE,
     send_date        date,
     placement_date   TIMESTAMP WITHOUT TIME ZONE,
     additional_notes VARCHAR(255),
@@ -108,6 +108,24 @@ CREATE TABLE categories
     CONSTRAINT pk_categories PRIMARY KEY (id)
 );
 
+CREATE TABLE product_images
+(
+    id                 INTEGER NOT NULL,
+    name               VARCHAR(255),
+    path               VARCHAR(255),
+    product_id         INTEGER,
+    CONSTRAINT pk_product_images PRIMARY KEY (id)
+);
+
+CREATE TABLE user_images
+(
+    id                 INTEGER NOT NULL,
+    name               VARCHAR(255),
+    path               VARCHAR(255),
+    user_id            INTEGER,
+    CONSTRAINT pk_user_images PRIMARY KEY (id)
+);
+
 ALTER TABLE categories
     ADD CONSTRAINT FK_CATEGORIES_ON_PARENT_CATEGORY FOREIGN KEY (parent_category_id) REFERENCES categories (id);
 
@@ -127,9 +145,6 @@ ALTER TABLE products
     ADD CONSTRAINT FK_PRODUCTS_ON_CATEGORY FOREIGN KEY (category_id) REFERENCES categories (id);
 
 ALTER TABLE orders
-    ADD CONSTRAINT uc_orders_code UNIQUE (code);
-
-ALTER TABLE orders
     ADD CONSTRAINT FK_ORDERS_ON_ADDRESS FOREIGN KEY (address_id) REFERENCES addresses (id);
 
 ALTER TABLE orders
@@ -142,19 +157,16 @@ ALTER TABLE orders
     ADD CONSTRAINT FK_ORDERS_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
 
 ALTER TABLE copies
-    ADD CONSTRAINT uc_copies_code UNIQUE (code);
-
-ALTER TABLE copies
     ADD CONSTRAINT FK_COPIES_ON_ORDER FOREIGN KEY (order_id) REFERENCES orders (id);
 
 ALTER TABLE copies
     ADD CONSTRAINT FK_COPIES_ON_PRODUCT FOREIGN KEY (product_id) REFERENCES products (id);
 
-ALTER TABLE contact_infos
-    ADD CONSTRAINT uc_contact_infos_email UNIQUE (email);
-
-ALTER TABLE contact_infos
-    ADD CONSTRAINT uc_contact_infos_telnumber UNIQUE (tel_number);
-
 ALTER TABLE characteristics
     ADD CONSTRAINT FK_CHARACTERISTICS_ON_PRODUCT FOREIGN KEY (product_id) REFERENCES products (id);
+
+ALTER TABLE product_images
+    ADD CONSTRAINT FK_PRODUCT_IMAGES_ON_PRODUCT FOREIGN KEY (product_id) REFERENCES products (id);
+
+ALTER TABLE user_images
+    ADD CONSTRAINT FK_USER_IMAGES_ON_PRODUCT FOREIGN KEY (user_id) REFERENCES users (id);
