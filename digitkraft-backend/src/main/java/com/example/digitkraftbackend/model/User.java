@@ -2,7 +2,6 @@ package com.example.digitkraftbackend.model;
 
 import lombok.*;
 import javax.persistence.*;
-import java.util.Objects;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -49,11 +48,9 @@ public class User {
                 ", username='" + username + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 ", contactInfo=" + contactInfo +
                 ", address=" + address +
-                ", roles=" + roles +
                 '}';
     }
 
@@ -62,11 +59,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return enabled == user.enabled && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(password, user.password) && Objects.equals(contactInfo, user.contactInfo) && Objects.equals(address, user.address) && Objects.equals(roles, user.roles);
+        return id != null && id.equals(user.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, firstname, lastname, password, enabled, contactInfo, address, roles);
+        return getClass().hashCode();
     }
 }

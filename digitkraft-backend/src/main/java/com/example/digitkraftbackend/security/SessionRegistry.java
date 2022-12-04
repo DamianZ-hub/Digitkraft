@@ -1,5 +1,6 @@
 package com.example.digitkraftbackend.security;
 
+import com.example.digitkraftbackend.exceptions.BlankUsernameException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -21,9 +22,9 @@ public class SessionRegistry {
         redisSessionStorage = redisTemplate.opsForValue();
     }
 
-    public String registerSession(final String username) {
+    public String registerSession(final String username) throws BlankUsernameException {
         if (StringUtils.isBlank(username)) {
-            throw new RuntimeException("Username needs to be provided");
+            throw new BlankUsernameException("Username needs to be provided");
         }
 
         final String sessionId = generateSessionId();

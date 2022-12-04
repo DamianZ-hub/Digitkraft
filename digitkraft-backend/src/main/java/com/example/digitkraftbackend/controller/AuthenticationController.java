@@ -3,8 +3,10 @@ package com.example.digitkraftbackend.controller;
 import com.example.digitkraftbackend.dto.RegisterUserDTO;
 import com.example.digitkraftbackend.dto.SessionDTO;
 import com.example.digitkraftbackend.dto.LoginUserDTO;
+import com.example.digitkraftbackend.exceptions.BlankUsernameException;
 import com.example.digitkraftbackend.security.SessionRegistry;
 import com.example.digitkraftbackend.service.UserAuthenticationService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/authentication")
+@AllArgsConstructor
 @Slf4j
 public class AuthenticationController {
 
@@ -22,18 +25,10 @@ public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final SessionRegistry sessionRegistry;
 
-    public AuthenticationController(UserAuthenticationService userAuthenticationService, AuthenticationManager authenticationManager, SessionRegistry sessionRegistry) {
-        this.userAuthenticationService = userAuthenticationService;
-        this.authenticationManager = authenticationManager;
-        this.sessionRegistry = sessionRegistry;
-    }
-
     @CrossOrigin
     @PostMapping("/login")
-    public ResponseEntity<SessionDTO> login(@RequestBody @Valid LoginUserDTO user) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-        );
+    public ResponseEntity<SessionDTO> login(@RequestBody @Valid LoginUserDTO user) throws BlankUsernameException {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         log.info("Successfully logged the user with username: {}", user.getPassword());
         return ResponseEntity.ok(new SessionDTO(sessionRegistry.registerSession(user.getUsername())));
     }
