@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableEncryptableProperties
-public class DigitkraftBackendApplication {
+public class DigitkraftBackendApplication{
 
     public static void main(String[] args) {
         SpringApplication.run(DigitkraftBackendApplication.class, args);

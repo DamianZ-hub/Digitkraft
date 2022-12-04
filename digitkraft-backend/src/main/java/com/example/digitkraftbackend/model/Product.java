@@ -30,6 +30,9 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private Set<Copy> copies;
 
+    @OneToMany(mappedBy = "product")
+    private Set<ProductImage> productImages;
+
     @Override
     public String toString() {
         return "Product{" +
@@ -39,6 +42,7 @@ public class Product {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", copies=" + copies +
+                ", productImages=" + productImages +
                 '}';
     }
 

@@ -15,25 +15,25 @@ CREATE TABLE addresses
 
 CREATE TABLE characteristics
 (
-    id         INT NOT NULL,
+    id              INT NOT NULL,
     char_name       VARCHAR(255),
-    char_value    VARCHAR(255),
-    product_id INT,
+    char_value      VARCHAR(255),
+    product_id      INT,
     CONSTRAINT pk_characteristics PRIMARY KEY (id)
 );
 
 CREATE TABLE contact_infos
 (
     id         INT NOT NULL,
-    tel_number VARCHAR(255),
-    email      VARCHAR(255),
+    tel_number VARCHAR(255) UNIQUE,
+    email      VARCHAR(255) UNIQUE,
     CONSTRAINT pk_contact_infos PRIMARY KEY (id)
 );
 
 CREATE TABLE copies
 (
     id         INT NOT NULL,
-    code       VARCHAR(255),
+    code       VARCHAR(255) UNIQUE,
     available  BOOLEAN,
     product_id INT,
     order_id   INT,
@@ -49,7 +49,7 @@ CREATE TABLE orders
     user_id          INT,
     contact_info_id  INT,
     address_id       INT,
-    code             VARCHAR(255),
+    code             VARCHAR(255) UNIQUE,
     send_date        date,
     placement_date   TIMESTAMP,
     additional_notes VARCHAR(255),
@@ -70,6 +70,7 @@ CREATE TABLE roles
 (
     id   INT NOT NULL,
     name VARCHAR(255),
+    path VARCHAR(255),
     CONSTRAINT pk_roles PRIMARY KEY (id)
 );
 
@@ -77,6 +78,7 @@ CREATE TABLE shipments
 (
     id    INT NOT NULL,
     name  VARCHAR(255),
+    path  VARCHAR(255),
     price DOUBLE,
     CONSTRAINT pk_shipments PRIMARY KEY (id)
 );
@@ -110,26 +112,30 @@ CREATE TABLE categories
     CONSTRAINT pk_categories PRIMARY KEY (id)
 );
 
+CREATE TABLE product_images
+(
+    id                 INT NOT NULL,
+    name               VARCHAR(255),
+    product_id         INTEGER,
+    CONSTRAINT pk_product_images PRIMARY KEY (id)
+);
+
+CREATE TABLE user_images
+(
+    id                 INT NOT NULL,
+    name               VARCHAR(255),
+    user_id            INTEGER,
+    CONSTRAINT pk_user_images PRIMARY KEY (id)
+);
+
 ALTER TABLE characteristics
     ADD CONSTRAINT FK_CHARACTERISTICS_ON_PRODUCT FOREIGN KEY (product_id) REFERENCES products (id);
-
-ALTER TABLE contact_infos
-    ADD CONSTRAINT uc_contact_infos_email UNIQUE (email);
-
-ALTER TABLE contact_infos
-    ADD CONSTRAINT uc_contact_infos_telnumber UNIQUE (tel_number);
-
-ALTER TABLE copies
-    ADD CONSTRAINT uc_copies_code UNIQUE (code);
 
 ALTER TABLE copies
     ADD CONSTRAINT FK_COPIES_ON_ORDER FOREIGN KEY (order_id) REFERENCES orders (id);
 
 ALTER TABLE copies
     ADD CONSTRAINT FK_COPIES_ON_PRODUCT FOREIGN KEY (product_id) REFERENCES products (id);
-
-ALTER TABLE orders
-    ADD CONSTRAINT uc_orders_code UNIQUE (code);
 
 ALTER TABLE orders
     ADD CONSTRAINT FK_ORDERS_ON_ADDRESS FOREIGN KEY (address_id) REFERENCES addresses (id);
@@ -160,3 +166,9 @@ ALTER TABLE users_roles
 
 ALTER TABLE categories
     ADD CONSTRAINT FK_CATEGORIES_ON_PARENT_CATEGORY FOREIGN KEY (parent_category_id) REFERENCES categories (id);
+
+ALTER TABLE product_images
+    ADD CONSTRAINT FK_PRODUCT_IMAGES_ON_PRODUCT FOREIGN KEY (product_id) REFERENCES products (id);
+
+ALTER TABLE user_images
+    ADD CONSTRAINT FK_USER_IMAGES_ON_PRODUCT FOREIGN KEY (user_id) REFERENCES users (id);

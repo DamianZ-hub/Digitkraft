@@ -6,10 +6,10 @@ import java.util.Set;
 
 @Data
 public class ProductDTO {
-
     private CategoryDTO category;
     private String name;
     private String description;
     private Double price;
     private Set<CopyDTO> copies;
+    private Set<ProductImageDTO> productImages;
 }
