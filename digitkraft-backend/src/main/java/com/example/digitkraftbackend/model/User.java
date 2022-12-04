@@ -41,6 +41,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    @OneToMany(mappedBy = "user")
+    private Set<UserImage> userImages;
+
     @Override
     public String toString() {
         return "User{" +
@@ -51,6 +54,7 @@ public class User {
                 ", enabled=" + enabled +
                 ", contactInfo=" + contactInfo +
                 ", address=" + address +
+                ", userImages=" + userImages +
                 '}';
     }
 
