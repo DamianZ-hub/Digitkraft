@@ -1,7 +1,7 @@
 package com.example.digitkraftbackend.model;
 
-import com.example.digitkraftbackend.model.utils.OrderStatus;
-import com.example.digitkraftbackend.model.utils.PaymentMethod;
+import com.example.digitkraftbackend.constant.OrderStatus;
+import com.example.digitkraftbackend.constant.PaymentMethod;
 import lombok.*;
 
 import javax.persistence.*;
