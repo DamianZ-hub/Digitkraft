@@ -3,7 +3,6 @@ package com.example.digitkraftbackend.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -31,7 +30,6 @@ public class Category {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", parentCategory=" + parentCategory +
                 '}';
     }
 
@@ -40,11 +38,11 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return Objects.equals(id, category.id) && Objects.equals(name, category.name) && Objects.equals(description, category.description) && Objects.equals(parentCategory, category.parentCategory);
+        return id != null && id.equals(category.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, parentCategory);
+        return getClass().hashCode();
     }
 }

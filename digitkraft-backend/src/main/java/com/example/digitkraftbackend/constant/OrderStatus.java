@@ -6,7 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum OrderStatus {
-    CREATED("C"), PAID("P"), SENT("S"), RECEIVED("R"), DELETED("D");
+    CREATED("CREATED"), PAID("PAID"), SENT("SENT"), RECEIVED("RECEIVED"), DELETED("DELETED");
 
     private String code;
 }

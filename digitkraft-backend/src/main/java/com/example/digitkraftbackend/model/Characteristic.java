@@ -3,8 +3,6 @@ package com.example.digitkraftbackend.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
-
 
 @Getter
 @Setter
@@ -34,7 +32,6 @@ public class Characteristic {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", value='" + value + '\'' +
-                ", product=" + product +
                 '}';
     }
 
@@ -42,12 +39,12 @@ public class Characteristic {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Characteristic that = (Characteristic) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(value, that.value) && Objects.equals(product, that.product);
+        Characteristic characteristic = (Characteristic) o;
+        return id != null && id.equals(characteristic.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, value, product);
+        return getClass().hashCode();
     }
 }

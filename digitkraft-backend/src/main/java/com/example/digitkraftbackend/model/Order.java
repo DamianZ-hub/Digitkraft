@@ -60,10 +60,6 @@ public class Order {
                 "id=" + id +
                 ", orderStatus=" + orderStatus +
                 ", paymentMethod=" + paymentMethod +
-                ", shipment=" + shipment +
-                ", user=" + user +
-                ", contactInfo=" + contactInfo +
-                ", address=" + address +
                 ", code='" + code + '\'' +
                 ", sendDate=" + sendDate +
                 ", placementDate=" + placementDate +
@@ -76,11 +72,11 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && orderStatus == order.orderStatus && paymentMethod == order.paymentMethod && Objects.equals(shipment, order.shipment) && Objects.equals(user, order.user) && Objects.equals(contactInfo, order.contactInfo) && Objects.equals(address, order.address) && Objects.equals(code, order.code) && Objects.equals(sendDate, order.sendDate) && Objects.equals(placementDate, order.placementDate) && Objects.equals(additionalNotes, order.additionalNotes);
+        return id != null && id.equals(order.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderStatus, paymentMethod, shipment, user, contactInfo, address, code, sendDate, placementDate, additionalNotes);
+        return getClass().hashCode();
     }
 }

@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public enum PaymentMethod {
 
-    PAYU("PayU"), CARD("Card"), BLIK("Blik"), PRZELEWY24("P24");
+    PAYU("PAYU"), CARD("CARD"), BLIK("BLIK"), PRZELEWY24("PRZELEWY24");
 
     private String code;
 }

@@ -9,6 +9,7 @@ import com.example.digitkraftbackend.repository.ContactInfoRepository;
 import com.example.digitkraftbackend.repository.RoleRepository;
 import com.example.digitkraftbackend.security.UserDetailsImpl;
 import com.example.digitkraftbackend.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@AllArgsConstructor
 public class UserAuthenticationService implements UserDetailsService {
 
 
@@ -27,19 +29,6 @@ public class UserAuthenticationService implements UserDetailsService {
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-
-    public UserAuthenticationService(UserRepository userRepository,
-                                     RoleRepository roleRepository,
-                                     ContactInfoRepository contactInfoRepository,
-                                     UserMapper userMapper,
-                                     PasswordEncoder passwordEncoder) {
-
-        this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
-        this.contactInfoRepository = contactInfoRepository;
-        this.userMapper = userMapper;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public UserDetailsImpl loadUserByUsername(String username) throws UsernameNotFoundException {

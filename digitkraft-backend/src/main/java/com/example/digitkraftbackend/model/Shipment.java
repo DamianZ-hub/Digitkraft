@@ -3,7 +3,6 @@ package com.example.digitkraftbackend.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -35,11 +34,11 @@ public class Shipment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Shipment shipment = (Shipment) o;
-        return Objects.equals(id, shipment.id) && Objects.equals(name, shipment.name) && Objects.equals(price, shipment.price);
+        return id != null && id.equals(shipment.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price);
+        return getClass().hashCode();
     }
 }
