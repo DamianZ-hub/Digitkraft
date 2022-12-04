@@ -1,0 +1,108 @@
+<div class="main-content">
+  <div id="loader" *ngIf="loading">
+    <img src="assets/img/loader-preview.svg" alt="loading" />
+  </div>
+  <div class="container-fluid">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="filter-container">
+          <div>
+            <label>Category</label>
+            <select
+              class="form-control"
+              [ngModel]="categorySubject | async"
+              (ngModelChange)="categorySubject.next($event)"
+            >
+              <option
+                *ngFor="let categoryName of CATEGORIES"
+                value="{{ categoryName }}"
+              >
+                {{ categoryName }}
+              </option>
+            </select>
+          </div>
+          <div class="price-filter">
+            <label>Price</label>
+            <div>
+              <input
+                class="form-control"
+                [ngModel]="fromPriceSubject | async"
+                (ngModelChange)="fromPriceSubject.next($event)"
+                placeholder="From"
+              />
+              <span> - </span>
+              <input
+                class="form-control"
+                [ngModel]="toPriceSubject | async"
+                (ngModelChange)="toPriceSubject.next($event)"
+                placeholder="To"
+              />
+            </div>
+          </div>
+          <div class="search-filter">
+            <label>Name</label>
+            <div>
+              <input
+                class="form-control"
+                [ngModel]="searchSubject | async"
+                (ngModelChange)="searchSubject.next($event)"
+                placeholder="Start Typing"
+              />
+              <i class="pe-7s-search"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="header">
+            <h4 class="title">
+              Returned {{ (filteredProducts$ | async)?.length || 0 }} Products
+            </h4>
+            <p class="category">
+              Handcrafted by our friends from the People's Republic of China
+            </p>
+          </div>
+          <div class="content all-icons">
+            <div class="row">
+              <div
+                *ngFor="let product of filteredProducts$ | async"
+                class="item-card col-lg-3 col-md-4 col-sm-4 col-xs-6 col-xs-6"
+                style="max-width: 400px"
+              >
+                <div class="card">
+                  <img
+                    class="card-img-top"
+                    src="{{ product.pictureUrl }}"
+                    alt="Product picture"
+                  />
+                  <div class="card-body">
+                    <div class="card-info">
+                      <h5 class="card-title">{{ product.name }}</h5>
+                      <span> {{ product.price | currency }} </span>
+                    </div>
+                    <p class="card-text">
+                      {{ product.shortDescription }}
+                    </p>
+                    <div class="item-button-container">
+                      <a class="btn btn-default btn-round"
+                        ><i class="pe-7s-search"></i
+                      ></a>
+                      <a
+                        (click)="addProductToCart(product)"
+                        class="btn btn-default btn-round"
+                        ><i class="pe-7s-cart"></i
+                      ></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

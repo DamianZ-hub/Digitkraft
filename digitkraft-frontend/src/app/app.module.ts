@@ -16,6 +16,7 @@ import { LoginComponent } from "./auth/login/login.component";
 import { RegisterComponent } from "./auth/register/register.component";
 import { HttpErrorNotificationInterceptor } from "./interceptors/http-error-notification.interceptor";
 import { CanActivateBasic } from "./auth/can-activate-basic";
+import { ProductListComponent } from './product-list/product-list.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { CanActivateBasic } from "./auth/can-activate-basic";
     AdminLayoutComponent,
     LoginComponent,
     RegisterComponent,
+    ProductListComponent,
   ],
   providers: [
     {

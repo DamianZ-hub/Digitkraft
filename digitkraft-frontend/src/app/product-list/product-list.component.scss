@@ -1,0 +1,99 @@
+.item-card {
+  .card {
+    transition: 0.3s;
+
+    height: 341px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+
+    &:hover {
+      background-color: rgba(220, 220, 220, 0.12);
+      transition: 0.3s;
+    }
+
+    .card-info {
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        transform: translateY(20%);
+      }
+    }
+
+    img {
+      border-radius: 0.5rem;
+      width: 100%;
+      height: 100%;
+      max-height: 16rem;
+      margin-top: 2rem;
+      object-fit: cover;
+    }
+
+    .card-title {
+      font-weight: bold;
+    }
+
+    .card-text {
+      line-height: 1.3em;
+      max-height: 45px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .item-button-container {
+      justify-content: space-between;
+      display: flex;
+      margin-bottom: 2rem;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      padding-right: 2rem;
+
+      i {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.filter-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+
+  > div {
+    width: 100%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .price-filter {
+    div {
+      flex-direction: row;
+      display: flex;
+    }
+
+    span {
+      margin: 1rem;
+    }
+  }
+
+  .search-filter {
+    > div {
+      position: relative;
+      i {
+        position: absolute;
+        right: 10px;
+        top: 11px;
+        font-size: 2rem;
+        pointer-events: none;
+      }
+    }
+  }
+}
