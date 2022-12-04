@@ -3,7 +3,6 @@ package com.example.digitkraftbackend.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -36,8 +35,6 @@ public class Copy {
                 "id=" + id +
                 ", code='" + code + '\'' +
                 ", available=" + available +
-                ", product=" + product +
-                ", order=" + order +
                 '}';
     }
 
@@ -46,11 +43,11 @@ public class Copy {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Copy copy = (Copy) o;
-        return Objects.equals(id, copy.id) && Objects.equals(code, copy.code) && Objects.equals(available, copy.available) && Objects.equals(product, copy.product) && Objects.equals(order, copy.order);
+        return id != null && id.equals(copy.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, available, product, order);
+        return getClass().hashCode();
     }
 }

@@ -3,7 +3,6 @@ package com.example.digitkraftbackend.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -50,11 +49,11 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(id, address.id) && Objects.equals(country, address.country) && Objects.equals(region, address.region) && Objects.equals(city, address.city) && Objects.equals(postCode, address.postCode) && Objects.equals(street, address.street) && Objects.equals(house, address.house) && Objects.equals(apartment, address.apartment);
+        return id != null && id.equals(address.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, country, region, city, postCode, street, house, apartment);
+        return getClass().hashCode();
     }
 }

@@ -3,7 +3,6 @@ package com.example.digitkraftbackend.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -36,12 +35,12 @@ public class ContactInfo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ContactInfo that = (ContactInfo) o;
-        return Objects.equals(id, that.id) && Objects.equals(telNumber, that.telNumber) && Objects.equals(email, that.email);
+        ContactInfo contactInfo = (ContactInfo) o;
+        return id != null && id.equals(contactInfo.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, telNumber, email);
+        return getClass().hashCode();
     }
 }

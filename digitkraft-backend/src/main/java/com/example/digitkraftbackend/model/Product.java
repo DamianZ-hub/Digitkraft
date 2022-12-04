@@ -3,7 +3,7 @@ package com.example.digitkraftbackend.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,6 +27,9 @@ public class Product {
 
     private Double price;
 
+    @OneToMany(mappedBy = "product")
+    private Set<Copy> copies;
+
     @Override
     public String toString() {
         return "Product{" +
@@ -35,6 +38,7 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
+                ", copies=" + copies +
                 '}';
     }
 
@@ -43,11 +47,11 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(category, product.category) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(price, product.price);
+        return id != null && id.equals(product.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, category, name, description, price);
+        return getClass().hashCode();
     }
 }
