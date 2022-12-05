@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 @RequestMapping("/product")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProductController {
 
     private final ProductService productService;
@@ -26,7 +27,7 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public List<ProductDTO> searchAllProducts(@RequestBody SearchBodyDTO searchBodyDTO) {
         return productService.searchAllProducts(searchBodyDTO);
     }

@@ -1,9 +1,13 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
-import { Observable } from "rxjs";
+import { request } from "http";
+import { catchError, map, Observable, tap } from "rxjs";
+import { ICategoryDto } from "./rest-client-dtos/ICategoryDto";
 import { ILoginUserDTO } from "./rest-client-dtos/ILoginUserDTO";
+import { IProductDto } from "./rest-client-dtos/IProductDto";
 import { IRegisterUserDTO } from "./rest-client-dtos/IRegisterUserDTO";
+import { ISearchBodyDto } from "./rest-client-dtos/ISearchBodyDto";
 import { ISessionDTO } from "./rest-client-dtos/ISessionDTO";
 
 @Injectable({
@@ -26,5 +30,32 @@ export class RestClientService {
       this.getUrl("authentication/login"),
       data
     );
+  }
+
+  getCategories(): Observable<Array<ICategoryDto>> {
+    return this.httpClient.get<Array<IProductDto>>(this.getUrl("category"));
+  }
+
+  getProductSearch(data: ISearchBodyDto): Observable<Array<IProductDto>> {
+    return this.httpClient.post<Array<IProductDto>>(
+      this.getUrl("product/search"),
+      data
+    );
+    // const params = this.objectToHttpParams(data);
+
+    // return this.httpClient.get<Array<IProductDto>>(
+    //   this.getUrl("product/search"),
+    //   { params: params }
+    // );
+  }
+
+  private objectToHttpParams(data: any): HttpParams {
+    let params = new HttpParams();
+
+    for (const [key, value] of Object.entries(data)) {
+      params = params.append(key, JSON.stringify(value));
+    }
+
+    return params;
   }
 }

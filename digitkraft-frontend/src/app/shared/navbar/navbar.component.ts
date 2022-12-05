@@ -6,6 +6,7 @@ import {
   PathLocationStrategy,
 } from "@angular/common";
 import { Router } from "@angular/router";
+import { CartService, ICartItem } from "../services/cart.service";
 
 @Component({
   // moduleId: module.id,
@@ -21,7 +22,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     location: Location,
     private element: ElementRef,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly cartService: CartService
   ) {
     this.location = location;
     this.sidebarVisible = false;
@@ -75,5 +77,13 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     localStorage.removeItem("sessionId");
     this.router.navigateByUrl("/login");
+  }
+
+  getCartItemAmount(): number {
+    return this.cartService.getCurrentCart().length;
+  }
+
+  getCurrentCart(): Array<ICartItem> {
+    return this.cartService.getCurrentCart();
   }
 }
