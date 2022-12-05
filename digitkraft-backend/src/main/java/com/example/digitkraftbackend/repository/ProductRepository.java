@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Optional<Product> findByNameIgnoreCase(String name);
 
     @Query("SELECT p FROM Product p " +
-            "WHERE (:name is null or p.name like %:name%) " +
+            "WHERE (:name is null or lower(p.name) like %:name%) " +
             "AND (:minPrice is null or p.price >= :minPrice)" +
             "AND (:maxPrice is null or p.price <= :maxPrice)" +
             "AND (:category is null or p.category.name like %:category%)")

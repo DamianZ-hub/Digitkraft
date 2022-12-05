@@ -9,6 +9,7 @@ import {
   combineLatest,
   debounceTime,
   distinctUntilChanged,
+  filter,
   map,
   Observable,
   switchMap,
@@ -48,7 +49,6 @@ export class ProductListComponent implements OnInit {
     ]).pipe(
       debounceTime(this.typingDebounceTimeout),
       distinctUntilChanged(),
-      tap(() => (this.loading = true)),
       map(([categoryFilter, fromPriceFilter, toPriceFilter, searchFilter]) => {
         return {
           category: categoryFilter,
@@ -57,6 +57,12 @@ export class ProductListComponent implements OnInit {
           name: searchFilter,
         } as ISearchBodyDto;
       }),
+      filter(
+        (requestBody) =>
+          this.checkIfPriceIsValid(requestBody.maxPrice) &&
+          this.checkIfPriceIsValid(requestBody.minPrice)
+      ),
+      tap(() => (this.loading = true)),
       switchMap((requestBody) => this.client.getProductSearch(requestBody)),
       tap(() => (this.loading = false))
     );
@@ -85,8 +91,14 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  getImageFullPath(path: string): string {
-    return `${environment.apiBaseUrl}/${path}`;
+  getImageFullPath(product: IProductDto): string {
+    const path = product.productImages[0].path;
+
+    return this.client.getProductImageFullUrl(path);
+  }
+
+  private checkIfPriceIsValid(price: string | number): boolean {
+    return price == +price;
   }
 }
 

@@ -16,6 +16,8 @@ import { catchError, Observable, of } from "rxjs";
 
 @Injectable()
 export class HttpErrorNotificationInterceptor implements HttpInterceptor {
+  private successHttpCodes = [200, 201];
+
   constructor(private readonly notificationService: NotificationService) {}
 
   intercept(
@@ -25,13 +27,16 @@ export class HttpErrorNotificationInterceptor implements HttpInterceptor {
     if (request.url.indexOf(environment.apiBaseUrl) !== -1) {
       return next.handle(request).pipe(
         catchError((error) => {
-          this.notificationService.showNotification(
-            NotificationVerticalPosition.Top,
-            NotificationHorizontalPosition.Center,
-            error.message,
-            NotificationTypes.Danger
-          );
-          return of();
+          if (!this.successHttpCodes.includes(error.status)) {
+            this.notificationService.showNotification(
+              NotificationVerticalPosition.Top,
+              NotificationHorizontalPosition.Center,
+              error.error,
+              NotificationTypes.Danger
+            );
+          }
+
+          return of(error);
         })
       );
     }

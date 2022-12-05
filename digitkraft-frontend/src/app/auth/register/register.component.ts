@@ -2,6 +2,12 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ValidationHelpers } from "app/shared/helpers/validation-helpers";
+import {
+  NotificationHorizontalPosition,
+  NotificationService,
+  NotificationTypes,
+  NotificationVerticalPosition,
+} from "app/shared/services/notification-service.service";
 import { RestClientService } from "app/shared/services/rest-client.service";
 import { Subscription } from "rxjs";
 
@@ -38,7 +44,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly client: RestClientService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -57,9 +64,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    this.client
-      .register(this.registerForm.getRawValue())
-      .subscribe(() => this.router.navigateByUrl("/login"));
+    this.client.register(this.registerForm.getRawValue()).subscribe((data) => {
+      this.notificationService.showNotification(
+        NotificationVerticalPosition.Top,
+        NotificationHorizontalPosition.Center,
+        data,
+        NotificationTypes.Success
+      );
+
+      this.router.navigateByUrl("/login");
+    });
   }
 
   canSubmit(): boolean {
