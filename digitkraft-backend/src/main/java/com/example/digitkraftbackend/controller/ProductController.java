@@ -6,7 +6,9 @@ import com.example.digitkraftbackend.exceptions.CategoryNotFoundException;
 import com.example.digitkraftbackend.service.ProductService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,5 +39,19 @@ public class ProductController {
         productService.saveProduct(product, image);
         log.info("Product {} saved successfully", product);
         return "Product" + product + " saved successfully";
+    }
+
+    @GetMapping(
+            value = "/image",
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody ResponseEntity<byte[]> getImage(@RequestParam("path") String path) {
+        var result = productService.getProductImage(path);
+
+        if (result == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(result);
     }
 }

@@ -30,6 +30,7 @@ public class ApplicationConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/authentication/**").permitAll()
+                .antMatchers("/product/image**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(
                         (request, response, ex) -> response.sendError(

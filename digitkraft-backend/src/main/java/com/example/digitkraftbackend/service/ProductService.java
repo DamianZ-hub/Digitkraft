@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,6 +23,8 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -63,8 +66,28 @@ public class ProductService {
     }
 
     public List<ProductDTO> searchAllProducts(SearchBodyDTO searchBodyDTO) {
-        List<Product> productList = productRepository.searchProducts(searchBodyDTO.getName(), searchBodyDTO.getMinPrice(), searchBodyDTO.getMaxPrice(), searchBodyDTO.getCategory());
+        var lowerCaseName = searchBodyDTO.getName() == null ? null : searchBodyDTO.getName().toLowerCase();
+        List<Product> productList = productRepository.searchProducts(lowerCaseName, searchBodyDTO.getMinPrice(), searchBodyDTO.getMaxPrice(), searchBodyDTO.getCategory());
         log.info("Successfully find all products with search body: {}", searchBodyDTO);
         return productList.stream().map(productMapper::productToProductDTO).toList();
+    }
+
+    public byte[] getProductImage(String path) {
+        if (!path.matches(".{1,}\\..{1,}")) {
+            return null;
+        }
+
+        try (Stream<Path> stream = Files.walk(Paths.get(path))) {
+            var paths = stream.filter(Files::isRegularFile).collect(Collectors.toList());
+            for (Path item: paths) {
+                if (path.endsWith(path)) {
+                    return Files.readAllBytes(item);
+                }
+            }
+        } catch (IOException e) {
+            return null;
+        }
+
+        return null;
     }
 }

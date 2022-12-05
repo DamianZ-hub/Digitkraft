@@ -75,7 +75,7 @@
                 <div class="card">
                   <img
                     class="card-img-top"
-                    src="{{ getImageFullPath(product.productImages[0]) }}"
+                    [attr.src]="getImageFullPath(product)"
                     onerror="this.src = 'assets/img/not_found_picture.png'"
                     alt="Product picture"
                   />

@@ -19,10 +19,9 @@ export class RestClientService {
   constructor(private readonly httpClient: HttpClient) {}
 
   register(data: IRegisterUserDTO): Observable<string> {
-    return this.httpClient.post<string>(
-      this.getUrl("authentication/register"),
-      data
-    );
+    return this.httpClient.post(this.getUrl("authentication/register"), data, {
+      responseType: "text",
+    });
   }
 
   login(data: ILoginUserDTO): Observable<ISessionDTO> {
@@ -47,6 +46,10 @@ export class RestClientService {
     //   this.getUrl("product/search"),
     //   { params: params }
     // );
+  }
+
+  getProductImageFullUrl(path: string): string {
+    return `${this.getUrl("product/image")}?path=${path}`;
   }
 
   private objectToHttpParams(data: any): HttpParams {
