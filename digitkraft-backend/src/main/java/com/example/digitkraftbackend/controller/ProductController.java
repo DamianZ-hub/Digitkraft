@@ -1,5 +1,6 @@
 package com.example.digitkraftbackend.controller;
 
+import com.example.digitkraftbackend.dto.AddProductDTO;
 import com.example.digitkraftbackend.dto.ProductDTO;
 import com.example.digitkraftbackend.dto.SearchBodyDTO;
 import com.example.digitkraftbackend.exceptions.CategoryNotFoundException;
@@ -34,9 +35,9 @@ public class ProductController {
         return productService.searchAllProducts(searchBodyDTO);
     }
 
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public String addProduct(@RequestPart ProductDTO product, @RequestPart MultipartFile image) throws IOException, CategoryNotFoundException {
-        productService.saveProduct(product, image);
+    @PostMapping
+    public String addProduct(@RequestBody AddProductDTO product) throws IOException, CategoryNotFoundException {
+        productService.saveProduct(product);
         log.info("Product {} saved successfully", product);
         return "Product" + product + " saved successfully";
     }

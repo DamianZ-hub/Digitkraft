@@ -17,6 +17,7 @@ import { RegisterComponent } from "./auth/register/register.component";
 import { HttpErrorNotificationInterceptor } from "./interceptors/http-error-notification.interceptor";
 import { ProductListComponent } from "./product-list/product-list.component";
 import { AuthInterceptor } from "./interceptors/auth.interceptor";
+import { AddProductComponent } from "./add-product/add-product.component";
 
 @NgModule({
   imports: [
@@ -36,13 +37,14 @@ import { AuthInterceptor } from "./interceptors/auth.interceptor";
     LoginComponent,
     RegisterComponent,
     ProductListComponent,
+    AddProductComponent,
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorNotificationInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: HttpErrorNotificationInterceptor,
+    //   multi: true,
+    // },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

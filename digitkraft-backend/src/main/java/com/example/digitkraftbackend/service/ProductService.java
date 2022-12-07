@@ -1,5 +1,7 @@
 package com.example.digitkraftbackend.service;
 
+import com.example.digitkraftbackend.dto.AddProductDTO;
+import com.example.digitkraftbackend.dto.CategoryDTO;
 import com.example.digitkraftbackend.dto.ProductDTO;
 import com.example.digitkraftbackend.dto.SearchBodyDTO;
 import com.example.digitkraftbackend.exceptions.CategoryNotFoundException;
@@ -15,8 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import javax.xml.bind.DatatypeConverter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,7 +39,18 @@ public class ProductService {
     private final ProductImageRepository productImageRepository;
     private final ProductMapper productMapper;
 
-    public void saveProduct(ProductDTO productDTO, MultipartFile file) throws CategoryNotFoundException, IOException {
+    public void saveProduct(AddProductDTO addProductDTO) throws CategoryNotFoundException, IOException {
+
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setName(addProductDTO.getName());
+        productDTO.setProductImages(addProductDTO.getProductImages());
+        productDTO.setPrice(addProductDTO.getPrice());
+        productDTO.setCopies(addProductDTO.getCopies());
+        productDTO.setDescription(addProductDTO.getDescription());
+        productDTO.setCopies(addProductDTO.getCopies());
+        var selectedCategory = new CategoryDTO();
+        selectedCategory.setName(addProductDTO.getCategory());
+        productDTO.setCategory(selectedCategory);
 
         Product product = productMapper.productDTOToProduct(productDTO);
         Path path = Paths.get(root + productDTO.getName() + "/");
@@ -46,11 +59,22 @@ public class ProductService {
         if (!Files.exists(path)) {
             Files.createDirectories(path);
         }
-        Files.copy(file.getInputStream(), path.resolve(file.getOriginalFilename()));
+
+        String[] strings = addProductDTO.getBase64Content().split(",");
+
+        byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
+
+        File file = new File(path.resolve(addProductDTO.getFileName()).toUri());
+        try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
+            outputStream.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         ProductImage productImage = new ProductImage();
         productImage.setProduct(product);
-        productImage.setName(file.getOriginalFilename());
-        productImage.setPath(root + productDTO.getName() + "/" + file.getOriginalFilename());
+        productImage.setName(addProductDTO.getFileName());
+        productImage.setPath(root + productDTO.getName() + "/" + addProductDTO.getFileName());
         Set<ProductImage> productImageSet = new HashSet<>();
         productImageSet.add(productImage);
         product.setProductImages(productImageSet);
