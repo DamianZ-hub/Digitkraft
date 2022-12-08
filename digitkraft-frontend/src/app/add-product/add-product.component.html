@@ -1,0 +1,134 @@
+<div class="main-content">
+  <div id="loader" *ngIf="loading">
+    <img src="assets/img/loader-preview.svg" alt="loading" />
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-5 col-sm-6">
+        <div class="card">
+          <div class="header">
+            <h4 class="title">Add New Product</h4>
+            <p class="category">
+              <!-- Handcrafted by our friends from the People's Republic of China -->
+            </p>
+          </div>
+          <div class="content">
+            <form [formGroup]="productForm" (ngSubmit)="submit()">
+              <div class="input-field">
+                <label>*NAME</label>
+                <input
+                  formControlName="name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Product Name"
+                />
+                <small
+                  class="text-danger validation-message"
+                  *ngIf="
+                    productForm.controls.name.touched &&
+                    productForm.controls.name.errors?.required
+                  "
+                >
+                  Name is required
+                </small>
+              </div>
+              <div class="input-field">
+                <label>*DESCRIPTION</label>
+                <textarea
+                  formControlName="description"
+                  type="text"
+                  class="form-control"
+                  placeholder="Product Description"
+                ></textarea>
+                <small
+                  class="text-danger validation-message"
+                  *ngIf="
+                    productForm.controls.description.touched &&
+                    productForm.controls.description.errors?.required
+                  "
+                >
+                  Description is required
+                </small>
+              </div>
+              <div class="input-field">
+                <label>*PICTURE</label>
+
+                <span>Select Image</span>
+                <input
+                  #imageInput
+                  type="file"
+                  accept="image/*"
+                  (change)="processFile(imageInput)"
+                />
+              </div>
+              <div class="input-field">
+                <label>*PRICE</label>
+                <input
+                  formControlName="price"
+                  type="text"
+                  class="form-control"
+                  placeholder="Price $"
+                />
+                <small
+                  class="text-danger validation-message"
+                  *ngIf="
+                    (productForm.controls.price.touched &&
+                      productForm.controls.price.errors?.required) ||
+                    (productForm.controls.price.touched &&
+                      productForm.controls.price.errors?.pattern)
+                  "
+                >
+                  Price is required
+                </small>
+              </div>
+              <div class="input-field">
+                <label>*CATEGORIES</label>
+                <div class="categories-container">
+                  <div>
+                    <div
+                      *ngFor="let category of categoriesPartOne"
+                      class="checkbox"
+                    >
+                      <input
+                        id="{{ category.name }}"
+                        (click)="selectCategory(category)"
+                        type="checkbox"
+                      />
+                      <label for="{{ category.name }}">{{
+                        category.name
+                      }}</label>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      *ngFor="let category of categoriesPartTwo"
+                      class="checkbox"
+                    >
+                      <input
+                        id="{{ category.name }}"
+                        (click)="selectCategory(category)"
+                        type="checkbox"
+                      />
+                      <label for="{{ category.name }}">{{
+                        category.name
+                      }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="button-container">
+                <button
+                  type="submit"
+                  class="btn btn-info btn-fill"
+                  [disabled]="!this.canSubmit()"
+                >
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

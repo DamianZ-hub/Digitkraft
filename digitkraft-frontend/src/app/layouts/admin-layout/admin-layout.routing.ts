@@ -8,6 +8,7 @@ import { IconsComponent } from "../../icons/icons.component";
 import { MapsComponent } from "../../maps/maps.component";
 import { NotificationsComponent } from "../../notifications/notifications.component";
 import { ProductListComponent } from "app/product-list/product-list.component";
+import { AddProductComponent } from "app/add-product/add-product.component";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "dashboard", component: HomeComponent },
@@ -18,4 +19,5 @@ export const AdminLayoutRoutes: Routes = [
   { path: "maps", component: MapsComponent },
   { path: "notifications", component: NotificationsComponent },
   { path: "productList", component: ProductListComponent },
+  { path: "addProduct", component: AddProductComponent },
 ];

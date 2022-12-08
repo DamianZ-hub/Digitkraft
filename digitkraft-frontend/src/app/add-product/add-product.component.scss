@@ -1,0 +1,30 @@
+.input-field {
+  margin-bottom: 2rem;
+}
+
+.categories-container {
+  display: flex;
+  flex-direction: row;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  div:first-of-type {
+    width: 50%;
+  }
+}
+
+.button-container {
+  display: flex;
+
+  > button {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+textarea {
+  resize: vertical;
+}

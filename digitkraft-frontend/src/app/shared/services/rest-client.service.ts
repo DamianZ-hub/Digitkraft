@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 import { request } from "http";
 import { catchError, map, Observable, tap } from "rxjs";
+import { IAddProductDto } from "./rest-client-dtos/IAddProductDto";
 import { ICategoryDto } from "./rest-client-dtos/ICategoryDto";
 import { ILoginUserDTO } from "./rest-client-dtos/ILoginUserDTO";
 import { IProductDto } from "./rest-client-dtos/IProductDto";
@@ -32,7 +33,7 @@ export class RestClientService {
   }
 
   getCategories(): Observable<Array<ICategoryDto>> {
-    return this.httpClient.get<Array<IProductDto>>(this.getUrl("category"));
+    return this.httpClient.get<Array<ICategoryDto>>(this.getUrl("category"));
   }
 
   getProductSearch(data: ISearchBodyDto): Observable<Array<IProductDto>> {
@@ -46,6 +47,12 @@ export class RestClientService {
     //   this.getUrl("product/search"),
     //   { params: params }
     // );
+  }
+
+  addProduct(data: IAddProductDto): Observable<string> {
+    return this.httpClient.post(this.getUrl("product"), data, {
+      responseType: "text",
+    });
   }
 
   getProductImageFullUrl(path: string): string {
