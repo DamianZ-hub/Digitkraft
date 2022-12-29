@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class ShipmentDTO {
 
+    private Integer id;
     private String name;
     private Double price;
 }

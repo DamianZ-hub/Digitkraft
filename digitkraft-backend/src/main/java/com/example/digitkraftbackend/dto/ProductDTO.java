@@ -6,6 +6,8 @@ import java.util.Set;
 
 @Data
 public class ProductDTO {
+
+    private Integer id;
     private CategoryDTO category;
     private String name;
     private String description;
