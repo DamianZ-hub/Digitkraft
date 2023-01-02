@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Data
 public class OrderDTO {
 
+    private Integer id;
     private OrderStatus orderStatus;
     private PaymentMethod paymentMethod;
     private ShipmentDTO shipment;

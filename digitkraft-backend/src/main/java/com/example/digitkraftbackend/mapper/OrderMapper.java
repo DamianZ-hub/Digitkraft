@@ -15,4 +15,13 @@ public interface OrderMapper {
     @Mapping(target = "contactInfo", ignore = true)
     @Mapping(target = "address", ignore = true)
     OrderDTO orderToSimpleOrderDTO(Order order);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "shipment", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "contactInfo", ignore = true)
+    @Mapping(target = "address", ignore = true)
+    Order orderDTOtoOrder(OrderDTO orderDTO);
+
+
 }

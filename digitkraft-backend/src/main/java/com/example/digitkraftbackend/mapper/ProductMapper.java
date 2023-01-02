@@ -11,5 +11,6 @@ public interface ProductMapper {
     @Mapping(source = "copies", target = "copies", qualifiedByName = "copyToSimpleCopyDTO")
     ProductDTO productToProductDTO(Product product);
 
+    @Mapping(target = "id", ignore = true)
     Product productDTOToProduct(ProductDTO productDTO);
 }
