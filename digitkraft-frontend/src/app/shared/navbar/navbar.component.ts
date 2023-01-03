@@ -7,17 +7,21 @@ import {
 } from "@angular/common";
 import { Router } from "@angular/router";
 import { CartService, ICartItem } from "../services/cart.service";
+import { IProductDto } from "../services/rest-client-dtos/IProductDto";
 
 @Component({
   // moduleId: module.id,
   selector: "navbar-cmp",
   templateUrl: "navbar.component.html",
+  styleUrls: ["navbar.component.scss"],
 })
 export class NavbarComponent implements OnInit {
   private listTitles: any[];
   location: Location;
   private toggleButton: any;
   private sidebarVisible: boolean;
+  searchText: string;
+  showSearch = false;
 
   constructor(
     location: Location,
@@ -60,8 +64,33 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  searchProduct() {
+    this.router.navigateByUrl(`/productList?search=${this.searchText || ""}`);
+    this.searchText = "";
+  }
+
   getTitle() {
     var titlee = this.location.prepareExternalUrl(this.location.path());
+
+    if (titlee.includes("productList")) {
+      this.showSearch = false;
+    } else {
+      this.showSearch = true;
+    }
+
+    if (titlee?.includes("productPreview")) {
+      //XD
+      return "Product Preview";
+    }
+
+    if (titlee?.includes("orderSummary")) {
+      return "Order Summary";
+    }
+
+    if (titlee?.includes("productList")) {
+      return "Product List";
+    }
+
     if (titlee.charAt(0) === "#") {
       titlee = titlee.slice(1);
     }
@@ -85,5 +114,9 @@ export class NavbarComponent implements OnInit {
 
   getCurrentCart(): Array<ICartItem> {
     return this.cartService.getCurrentCart();
+  }
+
+  removeCartItem(product: IProductDto): void {
+    this.cartService.removeProduct(product);
   }
 }

@@ -11,14 +11,15 @@ import { IProductDto } from "./rest-client-dtos/IProductDto";
   providedIn: "root",
 })
 export class CartService {
-  private readonly localStorageKey = "cart";
+  private readonly localStorageKey = () =>
+    `${localStorage.getItem("userName")}:cart`;
   private readonly setCurrentCart = (cart: Array<ICartItem>) =>
-    localStorage.setItem(this.localStorageKey, JSON.stringify(cart));
+    localStorage.setItem(this.localStorageKey(), JSON.stringify(cart));
 
   constructor(private readonly notificationService: NotificationService) {}
 
   readonly getCurrentCart = () =>
-    (JSON.parse(localStorage.getItem(this.localStorageKey)) ||
+    (JSON.parse(localStorage.getItem(this.localStorageKey())) ||
       []) as Array<ICartItem>;
 
   addProduct(product: IProductDto): void {
@@ -50,7 +51,7 @@ export class CartService {
       NotificationVerticalPosition.Top,
       NotificationHorizontalPosition.Center,
       `Product has been removed from cart`,
-      NotificationTypes.Success
+      NotificationTypes.Info
     );
   }
 
@@ -62,7 +63,7 @@ export class CartService {
   }
 
   clearCart(): void {
-    localStorage.setItem(this.localStorageKey, null);
+    localStorage.setItem(this.localStorageKey(), null);
   }
 }
 

@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { CartService } from "app/shared/services/cart.service";
 import { IProductDto } from "app/shared/services/rest-client-dtos/IProductDto";
 import { ISearchBodyDto } from "app/shared/services/rest-client-dtos/ISearchBodyDto";
 import { RestClientService } from "app/shared/services/rest-client.service";
+import { query } from "chartist";
 import { environment } from "environments/environment";
 import {
   BehaviorSubject,
@@ -12,6 +14,8 @@ import {
   filter,
   map,
   Observable,
+  startWith,
+  Subject,
   switchMap,
   tap,
 } from "rxjs";
@@ -30,21 +34,24 @@ export class ProductListComponent implements OnInit {
 
   filteredProducts$: Observable<Array<IProductDto>>;
   categorySubject = new BehaviorSubject(this.categoryAll);
-  fromPriceSubject = new BehaviorSubject(0);
-  toPriceSubject = new BehaviorSubject(1000);
+  fromPriceSubject = new Subject();
+  toPriceSubject = new Subject();
   searchSubject = new BehaviorSubject("");
 
   constructor(
     private readonly client: RestClientService,
-    private readonly cart: CartService
+    private readonly cart: CartService,
+    private readonly route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.setSearchTextFromQuery();
+
     this.getCategories();
     this.filteredProducts$ = combineLatest([
       this.categorySubject,
-      this.fromPriceSubject,
-      this.toPriceSubject,
+      this.fromPriceSubject.pipe(startWith(0)),
+      this.toPriceSubject.pipe(startWith(Number.MAX_VALUE)),
       this.searchSubject,
     ]).pipe(
       debounceTime(this.typingDebounceTimeout),
@@ -99,6 +106,16 @@ export class ProductListComponent implements OnInit {
 
   private checkIfPriceIsValid(price: string | number): boolean {
     return price == +price;
+  }
+
+  private setSearchTextFromQuery(): void {
+    this.route.queryParams.subscribe((params) => {
+      const searchTerm = params["search"];
+
+      if (!!searchTerm) {
+        this.searchSubject.next(searchTerm);
+      }
+    });
   }
 }
 

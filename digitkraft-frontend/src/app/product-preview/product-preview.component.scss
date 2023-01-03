@@ -1,0 +1,44 @@
+.product-container {
+  display: flex;
+  flex-direction: column;
+
+  .product-header {
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+
+    .image-container {
+      width: 50%;
+      img {
+        width: 100%;
+        border: solid 1px #ccc;
+        border-radius: 5px;
+        height: auto;
+      }
+    }
+
+    .details-panel {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      padding: 0rem 0rem 2rem 2rem;
+
+      .btn-container {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+      }
+
+      .product-description {
+      }
+    }
+  }
+}
+
+.title {
+  display: flex;
+
+  .price {
+    margin-left: auto;
+  }
+}
