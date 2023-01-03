@@ -97,3 +97,21 @@
     }
   }
 }
+
+$selected-btn-color: #3472f7;
+$unselected-btn-color: #888;
+
+.btn-product-in-cart {
+  border-color: $selected-btn-color;
+  color: white;
+  background-color: $selected-btn-color;
+}
+
+.btn-product-not-in-cart {
+  border-color: $unselected-btn-color;
+  color: $unselected-btn-color;
+}
+
+.pe-7s-look {
+  transform: scale(1.2);
+}

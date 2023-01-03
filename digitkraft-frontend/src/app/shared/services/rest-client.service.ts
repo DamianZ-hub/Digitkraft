@@ -49,6 +49,10 @@ export class RestClientService {
     // );
   }
 
+  getAllProducts(): Observable<Array<IProductDto>> {
+    return this.httpClient.get<Array<IProductDto>>(this.getUrl("product"));
+  }
+
   addProduct(data: IAddProductDto): Observable<string> {
     return this.httpClient.post(this.getUrl("product"), data, {
       responseType: "text",

@@ -88,14 +88,21 @@
                       {{ product.description }}
                     </p>
                     <div class="item-button-container">
-                      <a class="btn btn-default btn-round"
-                        ><i class="pe-7s-search"></i
-                      ></a>
                       <a
-                        (click)="addProductToCart(product)"
+                        href="{{ '#/productPreview?name=' + product.name }}"
                         class="btn btn-default btn-round"
-                        ><i class="pe-7s-cart"></i
+                        ><i class="pe-7s-look"></i
                       ></a>
+                      <button
+                        (click)="addProductToCart(product)"
+                        class="btn {{
+                          cart.checkIfAlreadyExists(product)
+                            ? 'btn-product-in-cart'
+                            : 'btn-product-not-in-cart'
+                        }} btn-round"
+                      >
+                        <i class="pe-7s-cart"></i>
+                      </button>
                     </div>
                   </div>
                 </div>

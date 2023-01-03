@@ -18,6 +18,8 @@ import { HttpErrorNotificationInterceptor } from "./interceptors/http-error-noti
 import { ProductListComponent } from "./product-list/product-list.component";
 import { AuthInterceptor } from "./interceptors/auth.interceptor";
 import { AddProductComponent } from "./add-product/add-product.component";
+import { ProductPreviewComponent } from './product-preview/product-preview.component';
+import { OrderSummaryComponent } from './order-summary/order-summary.component';
 
 @NgModule({
   imports: [
@@ -38,6 +40,8 @@ import { AddProductComponent } from "./add-product/add-product.component";
     RegisterComponent,
     ProductListComponent,
     AddProductComponent,
+    ProductPreviewComponent,
+    OrderSummaryComponent,
   ],
   providers: [
     // {

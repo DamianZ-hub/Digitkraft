@@ -53,11 +53,10 @@
               <div class="input-field">
                 <label>*PICTURE</label>
 
-                <span>Select Image</span>
                 <input
                   #imageInput
                   type="file"
-                  accept="image/*"
+                  accept=".jpeg, .jpg"
                   (change)="processFile(imageInput)"
                 />
               </div>
@@ -82,17 +81,18 @@
                 </small>
               </div>
               <div class="input-field">
-                <label>*CATEGORIES</label>
+                <label>*CATEGORY</label>
                 <div class="categories-container">
                   <div>
                     <div
                       *ngFor="let category of categoriesPartOne"
-                      class="checkbox"
+                      class="radio"
                     >
                       <input
                         id="{{ category.name }}"
                         (click)="selectCategory(category)"
-                        type="checkbox"
+                        type="radio"
+                        name="category_radio"
                       />
                       <label for="{{ category.name }}">{{
                         category.name
@@ -102,12 +102,13 @@
                   <div>
                     <div
                       *ngFor="let category of categoriesPartTwo"
-                      class="checkbox"
+                      class="radio"
                     >
                       <input
                         id="{{ category.name }}"
                         (click)="selectCategory(category)"
-                        type="checkbox"
+                        type="radio"
+                        name="category_radio"
                       />
                       <label for="{{ category.name }}">{{
                         category.name

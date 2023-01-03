@@ -1,0 +1,53 @@
+<div class="main-content">
+  <div id="loader" *ngIf="loading">
+    <img src="assets/img/loader-preview.svg" alt="loading" />
+  </div>
+  <div class="container-fluid">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="header">
+          <h4 class="title">
+            Product Name: {{ product.name }}
+            <span class="price">Price: {{ product.price | currency }}</span>
+          </h4>
+          <p class="category">Category: {{ product.category?.name }}</p>
+        </div>
+
+        <div class="product-container">
+          <div class="product-header">
+            <div class="image-container">
+              <img
+                [attr.src]="getImageFullPath(product)"
+                onerror="this.src = 'assets/img/not_found_picture.png'"
+                alt="Product picture"
+              />
+            </div>
+            <div class="details-panel">
+              <div class="btn-container">
+                <button
+                  (click)="addProductToCart(product)"
+                  type="button"
+                  class="btn btn-wd {{
+                    cart.checkIfAlreadyExists(product)
+                      ? 'btn-success'
+                      : 'btn-primary'
+                  }} btn-outline"
+                >
+                  {{
+                    cart.checkIfAlreadyExists(product)
+                      ? "Go to order summary"
+                      : "Add to cart"
+                  }}
+                </button>
+              </div>
+              <div class="product-description">
+                <h4>Description</h4>
+                <p>{{ product.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

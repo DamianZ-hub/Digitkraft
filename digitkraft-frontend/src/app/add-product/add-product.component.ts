@@ -64,13 +64,19 @@ export class AddProductComponent implements OnInit {
           this.notificationService.showNotification(
             NotificationVerticalPosition.Top,
             NotificationHorizontalPosition.Center,
-            data,
+            "Product added",
             NotificationTypes.Success
           );
           this.loading = false;
         }),
         catchError((error) => {
           this.loading = false;
+          this.notificationService.showNotification(
+            NotificationVerticalPosition.Top,
+            NotificationHorizontalPosition.Center,
+            "An error occured",
+            NotificationTypes.Danger
+          );
 
           return of(error);
         })

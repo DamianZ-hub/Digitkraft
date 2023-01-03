@@ -1,0 +1,27 @@
+.hide-long-text {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.title {
+  display: flex;
+
+  .btn-payment {
+    margin-left: auto;
+  }
+}
+
+.cart-item-trash {
+  margin-left: 80%;
+  color: tomato;
+  margin: auto 1rem;
+  transform: scale(1.5);
+  cursor: pointer;
+  font-weight: bold;
+
+  &:hover {
+    color: red;
+  }
+}

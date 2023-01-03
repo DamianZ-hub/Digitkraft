@@ -1,0 +1,64 @@
+<div class="main-content">
+  <div id="loader" *ngIf="loading">
+    <img src="assets/img/loader-preview.svg" alt="loading" />
+  </div>
+  <div class="container-fluid">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="header">
+          <h4 class="title">
+            Summary
+            <button
+              [disabled]="!(products?.length > 0)"
+              type="button"
+              class="btn-payment btn btn-wd btn-info btn-outline"
+            >
+              Go to payment & delivery
+              <span class="btn-label btn-label-right">
+                <i class="fa fa-arrow-right"></i>
+              </span>
+            </button>
+          </h4>
+          <p class="category">
+            Here you can review your order and proceed to the next step
+          </p>
+        </div>
+        <div class="content table-responsive table-full-width">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>PRICE</th>
+                <th>DESCRIPTION</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of products; let i = index">
+                <td style="width: 10%">{{ i + 1 }}</td>
+                <td style="width: 30%">
+                  <a href="{{ '#/productPreview?name=' + row.name }}">{{
+                    row.name
+                  }}</a>
+                </td>
+                <td style="width: 10%">{{ row.price | currency }}</td>
+                <td>
+                  <span class="hide-long-text" style="width: 385px">
+                    {{ row.description }}
+                  </span>
+                </td>
+                <td style="width: 10%">
+                  <i
+                    (click)="removeCartItem(row)"
+                    class="fa pe-7s-close cart-item-trash"
+                  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
