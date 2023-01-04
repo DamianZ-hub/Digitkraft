@@ -26,7 +26,13 @@ public class OrderService {
 
     public List<OrderDTO> getAllOrders() {
         List<Order> orderList = orderRepository.findAllByOrderByPlacementDateDesc();
-        log.info("Successfully find all categories from database");
+        log.info("Successfully returned all orders from database");
+        return orderList.stream().map(orderMapper::orderToOrderDTO).toList();
+    }
+
+    public List<OrderDTO> getOrdersByUserId(Integer userId) {
+        List<Order> orderList = orderRepository.findAllByUserIdOrderByPlacementDateDesc(userId);
+        log.info("Successfully returned orders for userId = " + userId + " from database");
         return orderList.stream().map(orderMapper::orderToOrderDTO).toList();
     }
 
