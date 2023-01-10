@@ -112,7 +112,7 @@
             class="text-danger validation-message"
             *ngIf="
               registerForm.controls.email.touched &&
-              registerForm.controls.email.errors?.email
+              registerForm.controls.email.errors?.pattern
             "
           >
             Email is not valid
@@ -121,7 +121,8 @@
             class="text-danger validation-message"
             *ngIf="
               registerForm.controls.email.touched &&
-              registerForm.controls.email.errors?.maxlength
+              registerForm.controls.email.errors?.maxlength &&
+              !registerForm.controls.email.errors?.pattern
             "
           >
             Email is too long
@@ -130,7 +131,8 @@
             class="text-danger validation-message"
             *ngIf="
               registerForm.controls.email.touched &&
-              registerForm.controls.email.errors?.minlength
+              registerForm.controls.email.errors?.minlength &&
+              !registerForm.controls.email.errors?.pattern
             "
           >
             Email is too short

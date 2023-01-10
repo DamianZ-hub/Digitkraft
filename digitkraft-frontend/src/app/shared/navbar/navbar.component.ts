@@ -8,6 +8,7 @@ import {
 import { Router } from "@angular/router";
 import { CartService, ICartItem } from "../services/cart.service";
 import { IProductDto } from "../services/rest-client-dtos/IProductDto";
+import { UserAuthService } from "../services/user-auth.service";
 
 @Component({
   // moduleId: module.id,
@@ -27,7 +28,8 @@ export class NavbarComponent implements OnInit {
     location: Location,
     private element: ElementRef,
     private readonly router: Router,
-    private readonly cartService: CartService
+    private readonly cartService: CartService,
+    private readonly userAuth: UserAuthService
   ) {
     this.location = location;
     this.sidebarVisible = false;
@@ -104,10 +106,16 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem("sessionId");
-    this.router.navigateByUrl("/login");
+    if (!this.userAuth.isLoggedUser()) {
+      this.userAuth.redirectToLogin();
+    } else {
+      localStorage.removeItem("sessionId");
+      this.router.navigateByUrl("/login");
+    }
   }
-
+  getLogoutText(): string {
+    return this.userAuth.isLoggedUser() ? "Log out" : "Log in";
+  }
   getCartItemAmount(): number {
     return this.cartService.getCurrentCart().length;
   }
