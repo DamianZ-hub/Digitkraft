@@ -10,7 +10,7 @@ import { UserAuthService } from "app/shared/services/user-auth.service";
 import { Observable } from "rxjs";
 
 @Injectable()
-export class CanActivateBasic implements CanActivate {
+export class CanActivateAdmin implements CanActivate {
   constructor(
     private readonly router: Router,
     private readonly userAuthService: UserAuthService

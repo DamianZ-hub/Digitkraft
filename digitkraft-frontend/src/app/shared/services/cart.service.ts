@@ -6,6 +6,7 @@ import {
   NotificationVerticalPosition,
 } from "./notification-service.service";
 import { IProductDto } from "./rest-client-dtos/IProductDto";
+import { UserAuthService } from "./user-auth.service";
 
 @Injectable({
   providedIn: "root",
@@ -16,13 +17,26 @@ export class CartService {
   private readonly setCurrentCart = (cart: Array<ICartItem>) =>
     localStorage.setItem(this.localStorageKey(), JSON.stringify(cart));
 
-  constructor(private readonly notificationService: NotificationService) {}
+  constructor(
+    private readonly notificationService: NotificationService,
+    private readonly userAuth: UserAuthService
+  ) {}
 
-  readonly getCurrentCart = () =>
-    (JSON.parse(localStorage.getItem(this.localStorageKey())) ||
+  getCurrentCart() {
+    if (!this.userAuth.isLoggedUser()) {
+      return [] as Array<ICartItem>;
+    }
+
+    return (JSON.parse(localStorage.getItem(this.localStorageKey())) ||
       []) as Array<ICartItem>;
+  }
 
   addProduct(product: IProductDto): void {
+    if (!this.userAuth.isLoggedUser()) {
+      this.userAuth.redirectToLogin();
+      return;
+    }
+
     const currentCart = this.getCurrentCart();
     currentCart.push({
       name: product.name,
@@ -40,6 +54,11 @@ export class CartService {
   }
 
   removeProduct(product: IProductDto): void {
+    if (!this.userAuth.isLoggedUser()) {
+      this.userAuth.redirectToLogin();
+      return;
+    }
+
     const productName = product.name;
     const currentCart = this.getCurrentCart();
     const newCart = currentCart.filter(
