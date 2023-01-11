@@ -27,7 +27,7 @@ const routes: Routes = [
     path: "",
     redirectTo: "dashboard",
     pathMatch: "full",
-    canActivate: [CanActivateBasic],
+    //canActivate: [CanActivateBasic],
   },
   {
     path: "",
@@ -41,12 +41,12 @@ const routes: Routes = [
           ),
       },
     ],
-    canActivate: [CanActivateBasic],
+    //canActivate: [CanActivateBasic],
   },
   {
     path: "**",
     redirectTo: "dashboard",
-    canActivate: [CanActivateBasic],
+    //canActivate: [CanActivateBasic],
   },
 ];
 

@@ -2,6 +2,7 @@ package com.example.digitkraftbackend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,6 +32,10 @@ public class ApplicationConfiguration {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/authentication/**").permitAll()
                 .antMatchers("/product/image**").permitAll()
+                .antMatchers(HttpMethod.GET, "/product").permitAll()
+                .antMatchers("/product/search**").permitAll()
+                .antMatchers(HttpMethod.GET, "/category").permitAll()
+
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(
                         (request, response, ex) -> response.sendError(

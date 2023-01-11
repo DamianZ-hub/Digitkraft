@@ -1,3 +1,36 @@
 .validation-message {
   position: absolute;
 }
+
+.search-filter {
+  > div {
+    position: relative;
+    i {
+      position: absolute;
+      right: 10px;
+      top: 11px;
+      font-size: 2rem;
+      pointer-events: none;
+    }
+  }
+}
+
+.cart-item-trash {
+  color: tomato;
+  margin: auto 1rem;
+  transform: scale(1.5);
+  cursor: pointer;
+  font-weight: bold;
+
+  &:hover {
+    color: red;
+  }
+}
+
+.order-summary-button {
+  display: flex;
+  > a {
+    flex-grow: 1;
+    margin: auto;
+  }
+}

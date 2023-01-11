@@ -1,75 +1,71 @@
-
 <div class="sidebar-wrapper">
-    <div class="logo">
-        <a href="/" class="simple-text">
-            DigitKraft
-        </a>
-    </div>
-    <ul class="nav responsive-nav">
-        <li *ngIf="isMobileMenu()">
-            <a class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-dashboard"></i>
-				<p class="hidden-lg hidden-md">Dashboard</p>
-            </a>
+  <div class="logo">
+    <a href="/" class="simple-text"> DigitKraft </a>
+  </div>
+  <ul class="nav responsive-nav">
+    <li class="dropdown" *ngIf="isMobileMenu()">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa pe-7s-cart"></i>
+        <b class="caret"></b>
+        <span
+          style="transform: translateX(21px)"
+          class="notification hidden-sm hidden-xs"
+          >{{ getCartItemAmount() }}</span
+        >
+        <p class="hidden-lg hidden-md">
+          {{ getCartItemAmount() }} ITEMS IN THE CART
+          <b class="caret"></b>
+        </p>
+      </a>
+      <ul
+        class="dropdown-menu"
+        *ngIf="getCartItemAmount() > 0; else empty_cart"
+      >
+        <li style="display: flex" *ngFor="let product of getCurrentCart()">
+          <a
+            style="width: 100%"
+            href="{{ '#/productPreview?name=' + product.name }}"
+            >{{ product.name }}</a
+          >
+          <i
+            (click)="removeCartItem(product)"
+            class="fa pe-7s-close cart-item-trash"
+          ></i>
         </li>
-        <li class="dropdown" *ngIf="isMobileMenu()">
-              <a class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-globe"></i>
-                    <b class="caret hidden-sm hidden-xs"></b>
-                    <span class="notification hidden-sm hidden-xs">5</span>
-					<p class="hidden-lg hidden-md">
-						5 Notifications
-						<b class="caret"></b>
-					</p>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Notification 1</a></li>
-                <li><a href="#">Notification 2</a></li>
-                <li><a href="#">Notification 3</a></li>
-                <li><a href="#">Notification 4</a></li>
-                <li><a href="#">Another notification</a></li>
-              </ul>
-        </li>
-        <li *ngIf="isMobileMenu()">
-           <a>
-                <i class="fa fa-search"></i>
-				<p class="hidden-lg hidden-md">Search</p>
-            </a>
-        </li>
-        <li *ngIf="isMobileMenu()">
-           <a href="">
-               <p>Account</p>
-            </a>
-        </li>
-        <li class="dropdown" *ngIf="isMobileMenu()">
-              <a class="dropdown-toggle" data-toggle="dropdown">
-                    <p>
-    					Dropdown
-    					<b class="caret"></b>
-    				</p>
+        <li class="divider"></li>
+        <div class="order-summary-button">
+          <a
+            style="background-color: aliceblue"
+            href="#/orderSummary"
+            class="btn btn-info btn-wd"
+            >Go to summary</a
+          >
+        </div>
+      </ul>
+      <ng-template #empty_cart>
+        <ul class="dropdown-menu">
+          Your cart is empty
+        </ul>
+      </ng-template>
+    </li>
+    <li *ngIf="isMobileMenu()">
+      <a href="#"> Account </a>
+    </li>
 
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-        </li>
-        <li *ngIf="isMobileMenu()">
-            <a>
-                <p>Log out</p>
-            </a>
-        </li>
-        <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
-        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}}">
-            <a  [routerLink]="[menuItem.path]">
-                <i class="{{menuItem.icon}}"></i>
-                <p>{{menuItem.title}}</p>
-            </a>
-        </li>
-    </ul>
+    <li *ngIf="isMobileMenu()">
+      <a style="cursor: pointer" (click)="logout()"> {{ getLogoutText() }} </a>
+    </li>
+
+    <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
+    <li
+      routerLinkActive="active"
+      *ngFor="let menuItem of menuItems"
+      class="{{ menuItem.class }}"
+    >
+      <a *ngIf="canShowEntry(menuItem)" [routerLink]="[menuItem.path]">
+        <i class="{{ menuItem.icon }}"></i>
+        <p>{{ menuItem.title }}</p>
+      </a>
+    </li>
+  </ul>
 </div>
