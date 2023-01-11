@@ -19,9 +19,14 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<OrderDTO> getAllOrders(){
         return orderService.getAllOrders();
+    }
+
+    @GetMapping
+    public List<OrderDTO> getOrdersByUserId(@RequestParam Integer userId){
+        return orderService.getOrdersByUserId(userId);
     }
 
     @PostMapping
