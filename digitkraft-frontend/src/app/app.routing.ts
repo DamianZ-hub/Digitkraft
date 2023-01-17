@@ -13,6 +13,7 @@ import { LoginComponent } from "./auth/login/login.component";
 import { RegisterComponent } from "./auth/register/register.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { CanActivateBasic } from "./auth/can-activate-basic";
+import { CanActivateAdmin } from "./auth/can-activate-admin";
 
 const routes: Routes = [
   {
@@ -59,7 +60,7 @@ const routes: Routes = [
       useHash: true,
     }),
   ],
-  providers: [CanActivateBasic],
+  providers: [CanActivateBasic, CanActivateAdmin],
   exports: [],
 })
 export class AppRoutingModule {}

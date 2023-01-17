@@ -93,6 +93,14 @@ export class NavbarComponent implements OnInit {
       return "Product List";
     }
 
+    if (titlee?.includes("payment")) {
+      return "Payment";
+    }
+
+    if (titlee?.includes("addOrder")) {
+      return "Add Order";
+    }
+
     if (titlee.charAt(0) === "#") {
       titlee = titlee.slice(1);
     }
