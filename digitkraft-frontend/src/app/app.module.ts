@@ -20,6 +20,10 @@ import { AuthInterceptor } from "./interceptors/auth.interceptor";
 import { AddProductComponent } from "./add-product/add-product.component";
 import { ProductPreviewComponent } from './product-preview/product-preview.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
+import {AddOrderComponent} from "./add-order/add-order.component";
+import {PaymentComponent} from "./payment/payment.component";
+import { NgPaymentCardModule } from 'ng-payment-card';
+
 
 @NgModule({
   imports: [
@@ -32,6 +36,7 @@ import { OrderSummaryComponent } from './order-summary/order-summary.component';
     SidebarModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NgPaymentCardModule,
   ],
   declarations: [
     AppComponent,
@@ -40,8 +45,10 @@ import { OrderSummaryComponent } from './order-summary/order-summary.component';
     RegisterComponent,
     ProductListComponent,
     AddProductComponent,
+    AddOrderComponent,
     ProductPreviewComponent,
     OrderSummaryComponent,
+    PaymentComponent,
   ],
   providers: [
     // {

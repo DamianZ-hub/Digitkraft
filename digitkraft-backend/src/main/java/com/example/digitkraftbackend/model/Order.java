@@ -14,6 +14,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "orders")
 public class Order {
 
@@ -39,7 +40,7 @@ public class Order {
     @JoinColumn(name = "contact_info_id")
     private ContactInfo contactInfo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 

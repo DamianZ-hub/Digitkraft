@@ -11,8 +11,10 @@ import { ProductListComponent } from "app/product-list/product-list.component";
 import { AddProductComponent } from "app/add-product/add-product.component";
 import { ProductPreviewComponent } from "app/product-preview/product-preview.component";
 import { OrderSummaryComponent } from "app/order-summary/order-summary.component";
+import {AddOrderComponent} from "../../add-order/add-order.component";
 import { CanActivateAdmin } from "app/auth/can-activate-admin";
 import { CanActivateBasic } from "app/auth/can-activate-basic";
+import {PaymentComponent} from "../../payment/payment.component";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "dashboard", component: HomeComponent },
@@ -34,4 +36,14 @@ export const AdminLayoutRoutes: Routes = [
     component: OrderSummaryComponent,
     canActivate: [CanActivateBasic],
   },
+  {
+    path: "addOrder",
+    component: AddOrderComponent,
+    canActivate: [CanActivateBasic],
+  },
+  {
+    path: "payment/:code",
+    component: PaymentComponent,
+    canActivate: [CanActivateBasic],
+  }
 ];
