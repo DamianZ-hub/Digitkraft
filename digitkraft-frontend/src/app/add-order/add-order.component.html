@@ -1,0 +1,185 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        Details of recipient of order
+                    </h4>
+                </div>
+                <div class="content">
+                    <form [formGroup]="addressForm" (ngSubmit)="submit()">
+
+
+                        <div class="input-field">
+                            <label>*COUNTRY</label>
+                            <input
+                                    formControlName="country"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Country Name"
+                            />
+                            <small
+                                    class="text-danger validation-message"
+                                    *ngIf="
+                                        addressForm.controls.country.touched &&
+                                        addressForm.controls.country.errors?.required
+                                      "
+                            >
+                                Country is required
+                            </small>
+                        </div>
+                        <div class="input-field margin-top-label">
+                            <label>*REGION</label>
+                            <input
+                                    formControlName="region"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Region Name"
+                            />
+                            <small
+                                    class="text-danger validation-message"
+                                    *ngIf="
+                                        addressForm.controls.region.touched &&
+                                        addressForm.controls.region.errors?.required
+                                      "
+                            >
+                                Region is required
+                            </small>
+                        </div>
+                        <div class="input-field margin-top-label">
+                            <label>*CITY</label>
+                            <input
+                                    formControlName="city"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="City Name"
+                            />
+                            <small
+                                    class="text-danger validation-message"
+                                    *ngIf="
+                                        addressForm.controls.city.touched &&
+                                        addressForm.controls.city.errors?.required
+                                      "
+                            >
+                                City is required
+                            </small>
+                        </div>
+                        <div class="input-field margin-top-label">
+                            <label>*POSTCODE</label>
+                            <input
+                                    formControlName="postcode"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Postcode Name"
+                            />
+                            <small
+                                    class="text-danger validation-message"
+                                    *ngIf="
+                                        addressForm.controls.postcode.touched &&
+                                        addressForm.controls.postcode.errors?.required
+                                      "
+                            >
+                                Postcode is required
+                            </small>
+                        </div>
+                        <div class="input-field margin-top-label">
+                            <label>*STREET</label>
+                            <input
+                                    formControlName="street"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Street Name"
+                            />
+                            <small
+                                    class="text-danger validation-message"
+                                    *ngIf="
+                                        addressForm.controls.street.touched &&
+                                        addressForm.controls.street.errors?.required
+                                      "
+                            >
+                                Street is required
+                            </small>
+                        </div>
+                        <div class="input-field margin-top-label">
+                            <label>*HOUSE</label>
+                            <input
+                                    formControlName="house"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="House Name"
+                            />
+                            <small
+                                    class="text-danger validation-message"
+                                    *ngIf="
+                                        addressForm.controls.house.touched &&
+                                        addressForm.controls.house.errors?.required
+                                      "
+                            >
+                                House is required
+                            </small>
+                        </div>
+                        <div class="input-field margin-top-label margin-bottom">
+                            <label>*APARTMENT</label>
+                            <input
+                                    formControlName="apartment"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Apartment Name"
+                            />
+                            <small
+                                    class="text-danger validation-message"
+                                    *ngIf="
+                                        addressForm.controls.apartment.touched &&
+                                        addressForm.controls.apartment.errors?.required
+                                      "
+                            >
+                                Apartment is required
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        Select a delivery option:
+                    </h4>
+                </div>
+                <div class="content">
+                    <select class="form-control" (change)="selectDeliveryOption($event)">
+                        <option *ngFor="let option of deliveryOptions; let i = index"
+                                [selected]="i==0"
+                                [value]="i">{{option.name}} - {{option.price}} PLN</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        Payment summary:
+                    </h4>
+                </div>
+                <div class="content">
+                    <h5 class="card-title">Price of the whole order: {{this.orderPrice}} PLN</h5>
+                    <h5 class="card-title">Price of the transport: {{this.selectedDeliveryOption.price}} PLN</h5>
+                    <hr class="mt-2 mb-3"/>
+                    <h5 class="card-title">Order price with transport: {{this.orderPrice+this.selectedDeliveryOption.price}} PLN</h5>
+                    <button
+                            type="button"
+                            class="btn-payment btn btn-wd btn-info btn-outline"
+                            (click)="submit()"
+                            [disabled]="!this.canSubmit()"
+                    >
+                        Pay for the order
+                        <span class="btn-label btn-label-right">
+                            <i class="fa fa-arrow-right"></i>
+                      </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

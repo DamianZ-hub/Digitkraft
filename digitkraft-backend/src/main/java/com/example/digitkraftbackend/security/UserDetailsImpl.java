@@ -2,6 +2,7 @@ package com.example.digitkraftbackend.security;
 
 import com.example.digitkraftbackend.model.User;
 import lombok.AllArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,9 +12,14 @@ import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
+@ToString
 public class UserDetailsImpl implements UserDetails {
 
     private final User user;
+
+    public User getUser() {
+        return user;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

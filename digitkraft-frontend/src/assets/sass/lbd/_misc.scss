@@ -53,6 +53,26 @@ input:focus {
     margin-top: 50px;
 }
 
+.margin-top-card{
+  margin-top: 100px;
+}
+
+@media (min-width: 1200px) {
+  /* CSS that should be displayed if width is equal to or less than 800px goes here */
+}
+
+.margin-top-label{
+  margin-top: 25px;
+}
+
+.margin-bottom{
+  margin-bottom: 25px;
+}
+
+.padding-select{
+  margin: 20px;
+}
+
 .wrapper{
     position: relative;
     top: 0;

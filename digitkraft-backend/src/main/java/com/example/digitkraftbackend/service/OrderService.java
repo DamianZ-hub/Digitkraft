@@ -1,16 +1,24 @@
 package com.example.digitkraftbackend.service;
 
+import com.example.digitkraftbackend.constant.OrderStatus;
+import com.example.digitkraftbackend.constant.PaymentMethod;
+import com.example.digitkraftbackend.dto.AddOrderDTO;
 import com.example.digitkraftbackend.dto.OrderDTO;
 import com.example.digitkraftbackend.exceptions.*;
+import com.example.digitkraftbackend.mapper.AddressMapper;
 import com.example.digitkraftbackend.mapper.OrderMapper;
+import com.example.digitkraftbackend.mapper.ShipmentMapper;
 import com.example.digitkraftbackend.model.*;
 import com.example.digitkraftbackend.repository.*;
+import com.example.digitkraftbackend.security.UserDetailsImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -18,11 +26,14 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper;
-    private final UserRepository userRepository;
-    private final AddressRepository addressRepository;
     private final ShipmentRepository shipmentRepository;
-    private final ContactInfoRepository contactInfoRepository;
+
+    private final AddressRepository addressRepository;
+
+    private final UserRepository userRepository;
+    private final OrderMapper orderMapper;
+    private final ShipmentMapper shipmentMapper;
+    private final AddressMapper addressMapper;
 
     public List<OrderDTO> getAllOrders() {
         List<Order> orderList = orderRepository.findAllByOrderByPlacementDateDesc();
@@ -36,38 +47,25 @@ public class OrderService {
         return orderList.stream().map(orderMapper::orderToOrderDTO).toList();
     }
 
-    public void saveOrder(OrderDTO orderDTO) throws IOException, UserNotFoundException, ShipmentNotFoundException, AddressNotFoundException, ContactInfoNotFoundException {
+    public String saveOrder(AddOrderDTO orderDTO, UserDetailsImpl userDetails) {
 
-        Order order = orderMapper.orderDTOtoOrder(orderDTO);
-        if (orderDTO.getUser() != null) {
-            Integer userId = orderDTO.getUser().getId();
-            if (userId == null) throw new IOException("Null user id");
-            User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("Could not find user with id: " + userId));
-            order.setUser(user);
-        }
+        Shipment shipment = shipmentMapper.shipmentDTOToShipment(orderDTO.getShipment());
+        Address address = addressMapper.addressDTOToAddress(orderDTO.getAddress());
+        User user = userDetails.getUser();
+        user.setAddress(address);
 
-        if (orderDTO.getAddress() != null) {
-            Integer addressId = orderDTO.getAddress().getId();
-            if (addressId == null) throw new IOException("Null address id");
-            Address address = addressRepository.findById(addressId).orElseThrow(() -> new AddressNotFoundException("Could not find address with id: " + addressId));
-            order.setAddress(address);
-        }
+        Order order = Order.builder()
+                .orderStatus(OrderStatus.CREATED)
+                .paymentMethod(PaymentMethod.CARD)
+                .user(userDetails.getUser())
+                .address(address)
+                .shipment(shipment)
+                .code(UUID.randomUUID().toString()).build();
 
-        if (orderDTO.getShipment() != null) {
-            Integer shipmentId = orderDTO.getShipment().getId();
-            if (shipmentId == null) throw new IOException("Null shipment id");
-            Shipment shipment = shipmentRepository.findById(shipmentId).orElseThrow(() -> new ShipmentNotFoundException("Could not find shipment with id: " + shipmentId));
-            order.setShipment(shipment);
-        }
-
-        if (orderDTO.getContactInfo() != null) {
-            Integer contactInfoId = orderDTO.getContactInfo().getId();
-            if (contactInfoId == null) throw new IOException("Null contactInfo id");
-            ContactInfo contactInfo = contactInfoRepository.findById(contactInfoId).orElseThrow(() -> new ContactInfoNotFoundException("Could not find contactInfo with id: " + contactInfoId));
-            order.setContactInfo(contactInfo);
-        }
-
+        userRepository.save(user);
+        shipmentRepository.save(shipment);
         orderRepository.save(order);
+        return order.getCode();
     }
 
     public void deleteOrder(Integer orderId) throws IOException, OrderNotFoundException {
