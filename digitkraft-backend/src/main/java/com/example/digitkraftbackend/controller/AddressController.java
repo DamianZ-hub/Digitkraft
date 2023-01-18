@@ -6,10 +6,7 @@ import com.example.digitkraftbackend.service.AddressService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -25,6 +22,14 @@ public class AddressController {
         AddressDTO addressDTO = addressService.getAddress(userDetails);
         log.info("Address {} taken successfully for userId: {}", addressDTO, userDetails.getUser().getId());
         return addressDTO;
+    }
+
+    @PostMapping
+    public String editAddress(@RequestBody AddressDTO addressDTO,
+                              @AuthenticationPrincipal UserDetailsImpl userDetails){
+        addressService.editAddress(addressDTO,userDetails);
+        log.info("Address {} edited successfully by user with id: {}",addressDTO,userDetails.getUser().getId());
+        return "Address successfully modified";
     }
 
 }

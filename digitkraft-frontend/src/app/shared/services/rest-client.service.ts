@@ -12,6 +12,7 @@ import {IRegisterUserDTO} from "./rest-client-dtos/IRegisterUserDTO";
 import {ISearchBodyDto} from "./rest-client-dtos/ISearchBodyDto";
 import {ISessionDTO} from "./rest-client-dtos/ISessionDTO";
 import {IAddressDto} from "./rest-client-dtos/IAddressDto";
+import {IOrderDTO} from "./rest-client-dtos/IOrderDTO";
 
 @Injectable({
     providedIn: "root",
@@ -39,6 +40,10 @@ export class RestClientService {
         return this.httpClient.get<Array<ICategoryDto>>(this.getUrl("category"));
     }
 
+    getOrders(): Observable<Array<IOrderDTO>> {
+        return this.httpClient.get<Array<IOrderDTO>>(this.getUrl("order"));
+    }
+
     getProductSearch(data: ISearchBodyDto): Observable<Array<IProductDto>> {
         return this.httpClient.post<Array<IProductDto>>(
             this.getUrl("product/search"),
@@ -60,6 +65,11 @@ export class RestClientService {
         return this.httpClient.get<IAddressDto>(this.getUrl("address"));
     }
 
+    editAddress(data): Observable<string>{
+        return this.httpClient.post(this.getUrl("address"), data, {
+            responseType: "text",
+        });    }
+
     addProduct(data: IAddProductDto): Observable<string> {
         return this.httpClient.post(this.getUrl("product"), data, {
             responseType: "text",
@@ -72,6 +82,14 @@ export class RestClientService {
 
     addOrder(data: IAddOrderDto): Observable<string> {
         return this.httpClient.post(this.getUrl("order"), data, {
+            responseType: "text",
+        });
+    }
+
+    payForProduct(data: string): Observable<string>{
+        return this.httpClient.post(this.getUrl("order/payment"), {
+            orderUniqueCode: data
+        }, {
             responseType: "text",
         });
     }

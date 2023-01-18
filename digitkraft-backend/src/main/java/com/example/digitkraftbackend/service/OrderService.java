@@ -4,6 +4,7 @@ import com.example.digitkraftbackend.constant.OrderStatus;
 import com.example.digitkraftbackend.constant.PaymentMethod;
 import com.example.digitkraftbackend.dto.AddOrderDTO;
 import com.example.digitkraftbackend.dto.OrderDTO;
+import com.example.digitkraftbackend.dto.PaymentDTO;
 import com.example.digitkraftbackend.exceptions.*;
 import com.example.digitkraftbackend.mapper.AddressMapper;
 import com.example.digitkraftbackend.mapper.OrderMapper;
@@ -17,6 +18,8 @@ import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -76,4 +79,11 @@ public class OrderService {
         orderRepository.delete(order);
     }
 
+    public void payForOder(PaymentDTO paymentDTO) {
+        Order order = orderRepository.findByCode(paymentDTO.getOrderUniqueCode());
+        order.setSendDate(LocalDate.now());
+        order.setPlacementDate(LocalDateTime.now().plusWeeks(1));
+        order.setOrderStatus(OrderStatus.PAID);
+        orderRepository.save(order);
+    }
 }

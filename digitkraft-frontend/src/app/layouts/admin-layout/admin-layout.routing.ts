@@ -15,6 +15,8 @@ import {AddOrderComponent} from "../../add-order/add-order.component";
 import { CanActivateAdmin } from "app/auth/can-activate-admin";
 import { CanActivateBasic } from "app/auth/can-activate-basic";
 import {PaymentComponent} from "../../payment/payment.component";
+import {AllOrdersComponent} from "../../all-orders/all-orders.component";
+import {EditAddressComponent} from "../../edit-address/edit-address.component";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "dashboard", component: HomeComponent },
@@ -40,6 +42,16 @@ export const AdminLayoutRoutes: Routes = [
     path: "addOrder",
     component: AddOrderComponent,
     canActivate: [CanActivateBasic],
+  },
+  {
+    path: "all-orders",
+    component: AllOrdersComponent,
+    canActivate: [CanActivateBasic]
+  },
+  {
+    path: "edit-address",
+    component: EditAddressComponent,
+    canActivate: [CanActivateBasic]
   },
   {
     path: "payment/:code",

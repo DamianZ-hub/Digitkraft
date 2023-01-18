@@ -22,6 +22,8 @@ import { ProductPreviewComponent } from './product-preview/product-preview.compo
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import {AddOrderComponent} from "./add-order/add-order.component";
 import {PaymentComponent} from "./payment/payment.component";
+import {AllOrdersComponent} from "./all-orders/all-orders.component";
+import {EditAddressComponent} from "./edit-address/edit-address.component";
 import { NgPaymentCardModule } from 'ng-payment-card';
 
 
@@ -49,6 +51,8 @@ import { NgPaymentCardModule } from 'ng-payment-card';
     ProductPreviewComponent,
     OrderSummaryComponent,
     PaymentComponent,
+    AllOrdersComponent,
+    EditAddressComponent,
   ],
   providers: [
     // {

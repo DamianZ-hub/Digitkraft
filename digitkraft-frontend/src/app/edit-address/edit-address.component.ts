@@ -1,41 +1,24 @@
 import {Component, OnInit} from "@angular/core";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {RestClientService} from "../shared/services/rest-client.service";
 import {
     NotificationHorizontalPosition,
     NotificationService, NotificationTypes,
     NotificationVerticalPosition
 } from "../shared/services/notification-service.service";
-import {catchError, of, take, tap} from "rxjs";
-import {IAddOrderDto} from "../shared/services/rest-client-dtos/IAddOrderDto";
 import {Router} from "@angular/router";
 import {CartService} from "../shared/services/cart.service";
-
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {catchError, of, take, tap} from "rxjs";
 
 @Component({
-    selector: "app-add-order",
-    templateUrl: "./add-order.component.html",
-    styleUrls: ["./add-order.component.scss"],
+    selector: "app-edit-address",
+    templateUrl: "./edit-address.component.html",
+    styleUrls: ["./edit-address.component.scss"],
 })
-export class AddOrderComponent implements OnInit {
+export class EditAddressComponent implements OnInit {
 
-    loading: boolean = false;
-    orderPrice: number;
-    deliveryOptions = [
-        {
-            name: 'Kurier DTP', price: 10
-        },
-        {
-            name: 'Kurier Inpost', price: 15
-        },
-        {
-            name: 'Poczta Polska', price: 20
-        }
-    ]
-    selectedDeliveryOption = {
-        name: '',
-        price: 0
-    }
+    loading: boolean = false
+
     addressForm = new FormGroup({
         country: new FormControl("", Validators.required),
         region: new FormControl("", Validators.required),
@@ -55,30 +38,7 @@ export class AddOrderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.selectedDeliveryOption = this.deliveryOptions[0]
-        this.client
-            .getAllProducts()
-            .pipe(
-                take(1),
-                tap(
-                    (data) => {
-                        this.orderPrice = data
-                            .map(order => order.price)
-                            .reduce((acc, currVal) => acc + currVal, 0);
-                    },
-                    catchError((error) => {
-                        this.notificationService.showNotification(
-                            NotificationVerticalPosition.Top,
-                            NotificationHorizontalPosition.Center,
-                            error,
-                            NotificationTypes.Success
-                        );
-                        return of(error);
-                    })
-                )
-            )
-            .subscribe();
-
+        this.loading = true
         this.client
             .getAddress()
             .pipe(
@@ -116,50 +76,28 @@ export class AddOrderComponent implements OnInit {
     }
 
     submit(): void {
-        this.loading = true;
+        this.loading = true
         const formControls = this.addressForm.controls;
-        const order = {
-            shipment: {
-                name: this.selectedDeliveryOption.name,
-                price: this.selectedDeliveryOption.price
-            },
-            address: {
-                country: formControls.country.value,
-                region: formControls.region.value,
-                city: formControls.city.value,
-                postCode: formControls.postcode.value,
-                street: formControls.street.value,
-                house: formControls.house.value,
-                apartment: formControls.apartment.value
-            }
-        } as IAddOrderDto;
-
+        const address = {
+            country: formControls.country.value,
+            region: formControls.region.value,
+            city: formControls.city.value,
+            postCode: formControls.postcode.value,
+            street: formControls.street.value,
+            house: formControls.house.value,
+            apartment: formControls.apartment.value
+        }
         this.client
-            .addOrder(order)
+            .editAddress(address)
             .pipe(
                 tap((data) => {
                     this.notificationService.showNotification(
                         NotificationVerticalPosition.Top,
                         NotificationHorizontalPosition.Center,
-                        "Order created",
+                        "Address was modified",
                         NotificationTypes.Success
                     );
                     this.loading = false;
-                    const order = {
-                        price: this.selectedDeliveryOption.price + this.orderPrice,
-                        data: data
-                    }
-                    if (localStorage.getItem("orders") === null) {
-                        const orders = []
-                        orders[0] = order
-                        localStorage.setItem("orders", JSON.stringify(orders));
-                    } else {
-                        const orders = JSON.parse(localStorage.getItem("orders"));
-                        orders.push(order);
-                        localStorage.setItem("orders", JSON.stringify(orders));
-                    }
-                    this.cart.clearCart()
-                    this.router.navigateByUrl('/payment/' + data)
                 }),
                 catchError((error) => {
                     this.loading = false;
@@ -173,9 +111,5 @@ export class AddOrderComponent implements OnInit {
                 })
             )
             .subscribe();
-    }
-
-    selectDeliveryOption(selectedOption): void {
-        this.selectedDeliveryOption = this.deliveryOptions[selectedOption.target.value]
     }
 }
