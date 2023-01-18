@@ -2,6 +2,7 @@ package com.example.digitkraftbackend.controller;
 
 import com.example.digitkraftbackend.dto.AddOrderDTO;
 import com.example.digitkraftbackend.dto.OrderDTO;
+import com.example.digitkraftbackend.dto.PaymentDTO;
 import com.example.digitkraftbackend.exceptions.*;
 import com.example.digitkraftbackend.model.User;
 import com.example.digitkraftbackend.security.UserDetailsImpl;
@@ -29,8 +30,8 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<OrderDTO> getOrdersByUserId(@RequestParam Integer userId) {
-        return orderService.getOrdersByUserId(userId);
+    public List<OrderDTO> getOrdersByUserId( @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return orderService.getOrdersByUserId(userDetails.getUser().getId());
     }
 
     @PostMapping
@@ -39,6 +40,13 @@ public class OrderController {
         String uniqueCode = orderService.saveOrder(orderDTO, userDetails);
         log.info("Order {} saved successfully for userId: {} with code: {}", orderDTO, userDetails.getUser().getId(), uniqueCode);
         return uniqueCode;
+    }
+
+    @PostMapping("/payment")
+    public String payForOder(@RequestBody PaymentDTO paymentDTO){
+        orderService.payForOder(paymentDTO);
+        log.info("Order with code: {} paid by user",paymentDTO.getOrderUniqueCode());
+        return "Order with code: "+paymentDTO.getOrderUniqueCode()+" paid by user";
     }
 
     @DeleteMapping
