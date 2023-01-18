@@ -1,22 +1,17 @@
-import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
-
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
-    selector: "payment",
-    templateUrl: "./payment.component.html",
-    styleUrls: ["./payment.component.scss"],
+  selector: "payment",
+  templateUrl: "./payment.component.html",
+  styleUrls: ["./payment.component.scss"],
 })
 export class PaymentComponent implements OnInit {
+  orderCode: string;
 
-    orderCode: string;
+  constructor(private readonly route: ActivatedRoute) {}
 
-    constructor(private readonly route: ActivatedRoute) {
-    }
-
-
-    ngOnInit(): void {
-        this.orderCode = this.route.snapshot.paramMap.get('code');
-    }
-
+  ngOnInit(): void {
+    this.orderCode = this.route.snapshot.paramMap.get("code");
+  }
 }

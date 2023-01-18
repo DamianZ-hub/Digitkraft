@@ -24,7 +24,7 @@ export class CanActivateAdmin implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const canActivate = this.userAuthService.isLoggedUser();
+    const canActivate = this.userAuthService.isAdminUser();
 
     if (!canActivate) {
       this.userAuthService.redirectToLogin();

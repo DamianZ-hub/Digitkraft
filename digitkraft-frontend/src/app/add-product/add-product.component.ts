@@ -23,7 +23,7 @@ export class AddProductComponent implements OnInit {
   categoriesPartOne: Array<ICategoryDto> = [];
   categoriesPartTwo: Array<ICategoryDto> = [];
   selectedCategories: Array<string> = [];
-
+  selectedCatttt: ICategoryDto;
   loading = false;
 
   productForm = new FormGroup({
@@ -46,7 +46,7 @@ export class AddProductComponent implements OnInit {
 
   submit(): void {
     const formControls = this.productForm.controls;
-    const categories = this.selectedCategories[0];
+    const categories = this.selectedCatttt.name;
     const product = {
       name: formControls.name.value,
       description: formControls.description.value,
@@ -87,24 +87,25 @@ export class AddProductComponent implements OnInit {
   canSubmit(): boolean {
     return (
       this.productForm.valid &&
-      this.selectedCategories.length > 0 &&
+      !!this.selectedCatttt &&
       !!this.selectedFileBase64
     );
   }
 
   selectCategory(category: ICategoryDto): void {
     const categoryName = category.name;
-    const categoryAlreadyExists = this.selectedCategories.find(
-      (x) => x === categoryName
-    );
+    // const categoryAlreadyExists = this.selectedCategories.find(
+    //   (x) => x === categoryName
+    // );
 
-    if (!!categoryAlreadyExists) {
-      this.selectedCategories = this.selectedCategories.filter(
-        (x) => x !== categoryName
-      );
-    } else {
-      this.selectedCategories.push(categoryName);
-    }
+    // if (!!categoryAlreadyExists) {
+    //   this.selectedCategories = this.selectedCategories.filter(
+    //     (x) => x !== categoryName
+    //   );
+    // } else {
+    //this.selectedCategories.push(categoryName);
+    //}
+    this.selectedCatttt = category;
   }
 
   processFile(imageInput: any) {
