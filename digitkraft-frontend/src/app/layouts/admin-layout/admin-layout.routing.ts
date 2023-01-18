@@ -11,10 +11,10 @@ import { ProductListComponent } from "app/product-list/product-list.component";
 import { AddProductComponent } from "app/add-product/add-product.component";
 import { ProductPreviewComponent } from "app/product-preview/product-preview.component";
 import { OrderSummaryComponent } from "app/order-summary/order-summary.component";
-import {AddOrderComponent} from "../../add-order/add-order.component";
+import { AddOrderComponent } from "../../add-order/add-order.component";
 import { CanActivateAdmin } from "app/auth/can-activate-admin";
 import { CanActivateBasic } from "app/auth/can-activate-basic";
-import {PaymentComponent} from "../../payment/payment.component";
+import { PaymentComponent } from "../../payment/payment.component";
 import {AllOrdersComponent} from "../../all-orders/all-orders.component";
 import {EditAddressComponent} from "../../edit-address/edit-address.component";
 
@@ -57,5 +57,5 @@ export const AdminLayoutRoutes: Routes = [
     path: "payment/:code",
     component: PaymentComponent,
     canActivate: [CanActivateBasic],
-  }
+  },
 ];

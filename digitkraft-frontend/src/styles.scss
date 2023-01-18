@@ -34,3 +34,22 @@
     margin: auto;
   }
 }
+
+.cc-form__wrapper--long {
+  width: 60%;
+}
+
+.cc-form__wrapper--short {
+  width: 15%;
+}
+
+.cc-form__wrapper {
+  margin-right: 5%;
+  margin-top: 5%;
+}
+
+.cc-form__wrapper.cc-form__wrapper--last {
+  margin-left: 5%;
+  margin-right: 20%;
+  margin-top: auto;
+}

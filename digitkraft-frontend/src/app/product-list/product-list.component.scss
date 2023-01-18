@@ -42,6 +42,11 @@
       -webkit-line-clamp: 2;
       overflow: hidden;
       margin-bottom: 1.5rem;
+
+      display: block; /* or in-line block according to your requirement */
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .item-button-container {
